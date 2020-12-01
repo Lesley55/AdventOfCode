@@ -6,10 +6,17 @@ function start() {
             if(input[i] + input[j] === 2020) {
                 console.log(input[i] * input[j])
             }
+            for (let k = 0; k < input.length; k++) {
+                if(input[i] + input[j] + input[k] === 2020) {
+                    console.log(input[i] * input[j] * input[k])
+                }
+                
+            }
         }
     }
 }
 
 start();
 
-// 866436
+// eerste deel: 866436
+// tweede deel: 276650720
