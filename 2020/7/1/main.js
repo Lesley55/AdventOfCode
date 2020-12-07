@@ -49,4 +49,3 @@ function start() {
 start();
 
 // eerste deel: 378
-// tweede deel: 
