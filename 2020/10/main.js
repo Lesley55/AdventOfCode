@@ -6,27 +6,38 @@ function start() {
     input.push(0) // charging port
     input.sort((a, b) => a - b);
     input.push(input[input.length-1]+3) // device
-    let f = []
     for (let i = 1; i < input.length; i++) {
         if (input[i]-input[i-1] == 1) {
             jolt1++
         } else if (input[i]-input[i-1] == 3) {
             jolt3++
         }
-        let a = 1
-        for (let j = 1; j < 4; j++) {
-            if(input[i+j]-input[i-1] <= 3) {
-                a++
-            }
-        }
-        f.push(a)
     }
     console.log(jolt1 * jolt3)
-    console.log(f)
-    console.log(input)
+
+    // part 2
+    let a = [0,1,1,2] // 0 zodat ik geen index out of bounds krijg, 1,1,2 zelf uitgerekend voor de eerste 3 aangezien ik die oversla voor de loop
+    for (let j = 3; j < input.length; j++) {
+        let b = 0
+        // console.log("input", input[j], ": ", input[j-3], input[j] - input[j-3], input[j] - input[j-3] <= 3, input[j-2], input[j] - input[j-2], input[j] - input[j-2] <= 3, input[j-1], input[j] - input[j-1], input[j] - input[j-1] <= 3)
+        if (input[j] - input[j-3] <= 3) {
+            b += a[a.length-3]
+        }
+        if (input[j] - input[j-2] <= 3) {
+            b += a[a.length-2]
+        }
+        // if (input[j] - input[j-1] <= 3) { // always true
+            b += a[a.length-1]
+        // }
+        // console.log(a[a.length-3], a[a.length-2], a[a.length-1], "=", b)
+        a.push(b)
+    }
+    // console.log(input)
+    // console.log(a)
+    console.log(a[a.length-1])
 }
 
 start();
 
 // eerste deel: 2030
-// tweede deel:
+// tweede deel: 42313823813632
