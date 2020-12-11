@@ -14,42 +14,31 @@ function start() {
         change = false
         for (let y = 0; y < input.length; y++) {
             for (let x = 0; x < input[y].length; x++) {
-                let occ = input[y][x]
-                // if(occ == ".") {
-                //     continue
-                // }
-
                 // count adjacent
                 let a = 0
                 for (let j = -1; j < 2; j++) {
                     // extra condities voor index out of bounds, en bij middelste zichzelf niet meenemen
-                    if(y >= 1 && x >= 1 && x <= input[y].length-2 && input[y-1][x+j] == occ) {
+                    if(y >= 1 && x >= 1 && x <= input[y].length-2 && input[y-1][x+j] == "#") {
                         a++
                     }
-                    if(x+j !== x && input[y][x+j] == occ) {
+                    if(x+j !== x && input[y][x+j] == "#") {
                         a++
                     }
-                    if(y <= input.length-2 && x >= 1 && x <= input[y].length-2 && input[y+1][x+j] == occ) {
+                    if(y <= input.length-2 && x >= 1 && x <= input[y].length-2 && input[y+1][x+j] == "#") {
                         a++
                     }
                 }
                 
                 // 2e array
-                if(a >= 4) {
-                    if (occ == "L") {
-                        input2[y][x] = "#"
-                        change = true
-                    } else if(occ == "#") {
-                        input2[y][x] = "L"
-                        change = true
-                    }
-                } 
-                // else {
-                //     input2[y][x] = input[y][x]
-                // }
+                if (a == 0 && input[y][x] == "L") {
+                    input2[y][x] = "#"
+                    change = true
+                } else if (a >= 4 && input[y][x] == "#") {
+                    input2[y][x] = "L"
+                    change = true
+                }
             }
         }
-
         input = input2
     }
 
@@ -69,3 +58,6 @@ start();
 
 // eerste deel: 
 // tweede deel: 
+
+// 3266 to high
+// 2075 to low
