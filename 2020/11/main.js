@@ -9,12 +9,12 @@ function start() {
     }
     for (let i = 0; i < input.length; i++) {
         input2[0].push(".")
-        input2[i+1] = [".", ...input[i].split(""), "."]
+        input2.splice([i+1], 1, [".", ...input[i].split(""), "."])
         input2[input2.length-1].push(".")
     }
     input2[0].push(".")
     input2[input2.length-1].push(".")
-    input = [...input2]
+    input.splice(0, input.length, ...input2);
     
     let change = true
     while(change) {
@@ -45,15 +45,15 @@ function start() {
                 console.log(a)
                 // 2e array
                 if (a == 0 && input[y][x] == "L") {
-                    input2[y][x] = "#"
+                    input[y].splice(x, 1, "#")
                     change = true
                 } else if (a >= 4 && input[y][x] == "#") {
-                    input2[y][x] = "L"
+                    input[y].splice(x, 1, "L")
                     change = true
                 }
             }
         }
-        input = [...input2]
+        input.splice(0, input.length, ...input2);
         console.log(input)
     }
 
@@ -61,7 +61,7 @@ function start() {
     let occSeat = 0
     for (let y = 0; y < input.length; y++) {
         for (let x = 0; x < input[y].length; x++) {
-            if (input[y][x] == "#") {
+            if (input[y] == "#") {
                 occSeat++
             }
         }
