@@ -10,5 +10,5 @@ function start() {
 
 start();
 
-// eerste deel: 
-// tweede deel: 
+// eerste deel: 6583
+// tweede deel: 3290
