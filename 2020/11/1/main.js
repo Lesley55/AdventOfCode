@@ -67,5 +67,4 @@ function start() {
 
 start();
 
-// eerste deel:  2277
-// tweede deel: 
+// eerste deel: 2277
