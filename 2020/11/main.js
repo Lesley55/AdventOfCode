@@ -21,7 +21,7 @@ function start() {
                     if(y >= 1 && x >= 1 && x <= input[y].length-2 && input[y-1][x+j] == "#") {
                         a++
                     }
-                    if(x+j !== x && input[y][x+j] == "#") {
+                    if(j !== 0 && input[y][x+j] == "#") {
                         a++
                     }
                     if(y <= input.length-2 && x >= 1 && x <= input[y].length-2 && input[y+1][x+j] == "#") {
