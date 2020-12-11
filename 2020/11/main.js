@@ -61,7 +61,7 @@ function start() {
     let occSeat = 0
     for (let y = 0; y < input.length; y++) {
         for (let x = 0; x < input[y].length; x++) {
-            if (input[y] == "#") {
+            if (input[y][x] == "#") {
                 occSeat++
             }
         }
