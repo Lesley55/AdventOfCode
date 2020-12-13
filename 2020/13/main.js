@@ -26,8 +26,8 @@ function start() {
     console.log(bus[0] * (bus[1] - time))
 
     // part 2
-    let t = 0
     let sort = two.sort(function(a, b) { return b[0] - a[0]; }); // groot naar klein
+    let t = sort[0][0]
     while(true) {
         console.log(t);
         let count = 0
@@ -51,4 +51,7 @@ start();
 
 // eerste deel: 3606
 // tweede deel: 
-// random nummer gepakt toen hij vastliep 1206207 to low
+// na een half miljard nog niet klaar, duurt te lang, ga ik niet op kunnen wachten
+// blijkbaar gebruikt iedereen chinese reststelling https://nl.wikipedia.org/wiki/Chinese_reststelling
+// maar ik snap die formule niet, en je moet eerst nog een andere formule gebuiken https://nl.wikipedia.org/wiki/Algoritme_van_Euclides
+// laat maar zitten dan
