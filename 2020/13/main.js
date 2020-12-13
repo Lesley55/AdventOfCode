@@ -7,10 +7,11 @@ function start() {
     for (let i = 0; i < input.length; i++) {
         if(input[i] !== "x") {
             a.push([input[i], input[i]])
-            two.push([input[i], input[i]], i)
+            two.push([input[i], i])
         }
     }
     
+    // part 1
     for (let i = 0; i < a.length; i++) {
         while(a[i][1] < time) {
             a[i][1] += a[i][0]
@@ -26,28 +27,22 @@ function start() {
 
     // part 2
     let t = input[0]
+    let sort = two.sort(function(a, b) { return b[0] - a[0]; });
+    let big = sort[0]
     while(true) {
+        let count = 0
         for (let i = 0; i < two.length; i++) {
-            while(two[i][1] < t + two[i][2]) {
-                two[i][1] += two[i][0]
+            if((t + two[i][1]) % two[i][0] == 0) {
+                count++
+            } else {
+                break
             }
         }
-        let c = 0
-        for (let i = 0; i < two.length; i++) {
-            if(two[i][1] == t + two[i][2]) {
-                c++
-            }
-        }
-        if (c == two.length) {
+        if (count == two.length) {
             break
+        } else {
+            t += big
         }
-        t += input[0]
-        
-        // mogelijk performance gain als je grote getallen hebt of het eerste getal klein is en een niet te grote array om te sorten?
-        // let sort = two.sort(function(a, b) { return b[1] - a[1]; }); // sort groot naar klein
-        // let w = sort[0][0] / input[0] + 1
-        // t += input[0] * w
-        // je hoeft niet elke keer array te sorten, 1x de grootste pakken voor de while is beter
     }
     console.log(t);
 }
