@@ -26,22 +26,22 @@ function start() {
     console.log(bus[0] * (bus[1] - time))
 
     // part 2
-    let t = input[0]
-    let sort = two.sort(function(a, b) { return b[0] - a[0]; });
-    let big = sort[0]
+    let t = 0
+    let sort = two.sort(function(a, b) { return b[0] - a[0]; }); // groot naar klein
     while(true) {
+        console.log(t);
         let count = 0
-        for (let i = 0; i < two.length; i++) {
-            if((t + two[i][1]) % two[i][0] == 0) {
+        for (let i = 0; i < sort.length; i++) {
+            if((t + sort[i][1]) % sort[i][0] == 0) {
                 count++
             } else {
                 break
             }
         }
-        if (count == two.length) {
+        if (count == sort.length) {
             break
         } else {
-            t += big
+            t += sort[0][0] // + grootste
         }
     }
     console.log(t);
@@ -51,3 +51,4 @@ start();
 
 // eerste deel: 3606
 // tweede deel: 
+// random nummer gepakt toen hij vastliep 1206207 to low
