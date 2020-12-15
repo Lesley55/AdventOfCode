@@ -21,4 +21,3 @@ function start() {
 start();
 
 // eerste deel: 289
-// tweede deel: 
