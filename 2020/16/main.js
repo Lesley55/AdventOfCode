@@ -22,7 +22,6 @@ function start() {
                     break
                 }
             }
-            console.log(valid);
             if (!valid) {
                 error += tickets[i][j]
             }
