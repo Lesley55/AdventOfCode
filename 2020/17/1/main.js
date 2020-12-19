@@ -102,4 +102,3 @@ function count() {
 start();
 
 // eerste deel: 324
-// tweede deel: 
