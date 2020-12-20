@@ -57,4 +57,3 @@ function masking(mask, binary) {
 start();
 
 // eerste deel: 13865835758282
-// tweede deel: 
