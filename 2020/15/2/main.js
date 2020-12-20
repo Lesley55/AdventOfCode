@@ -1,24 +1,20 @@
 let input = [0,8,15,2,12,1,4]
-let unique = []
+let unique = new Map()
 
 function start() {
-    for (let i = 0; i < input.length; i++) {
-        unique.push([input[i], i])
+    for (let i = 0; i < input.length-1; i++) {
+        unique.set(input[i], i)
     }
 
     let last = input[input.length-1]
-    for (let i = input.length; i < 2020; i++) {
-        let a = unique.findIndex((e) => e[0] == last)
-        if(a !== -1) {
-            last = i - unique[a][1]
+    for (let i = input.length-1; i < 30000000 - 1; i++) {
+        if (unique.has(last)) {
+            let n = i - unique.get(last)
+            unique.set(last, i)
+            last = n
         } else {
+            unique.set(last, i)
             last = 0
-        }
-        // update of push
-        if(unique.findIndex((e) => e[0] == last) !== -1) {
-            unique[a][1] = i
-        } else {
-            unique.push([last, i])
         }
     }
     console.log(last)
@@ -26,5 +22,4 @@ function start() {
 
 start();
 
-// tweede deel: 
-// 289
+// tweede deel: 1505722
