@@ -48,6 +48,7 @@ function masking(mask, binary) {
 }
 
 function toMemory(masked, val) {
+    // als er een x is, recursie met beide 0 en 1
     let x = false
     for (let i = 0; i < masked.length; i++) {
         if (masked.substring(i, i+1) == "X") {
@@ -58,6 +59,7 @@ function toMemory(masked, val) {
             toMemory(one, val)
         }
     }
+    // geen x, dan memory zetten
     if (!x) {
         let mem = num(masked)
         if(memory.has(mem)) {
