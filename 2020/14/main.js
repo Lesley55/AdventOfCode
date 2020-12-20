@@ -12,18 +12,17 @@ function start() {
             let mem = input[i].split(/[\[\]\=]/i) // split to take out number
             let masked = masking(mask, bin(mem[3].substring(1))) // mask binary
             if(memory.has(mem[1])) {
-                memory[mem[1]] = num(masked) // update
-            } else {
-                memory.set(mem[1], num(masked)) // push
+                memory.delete(mem[1]) // huidige weggooien
             }
+            memory.set(mem[1], num(masked)) // nieuwe pushen
             console.log(num(masked));
         }
     }
 
     // count in memory
     let total = 0
-    for (let i in memory) {
-        total += memory.get(i)
+    for (let value of memory.values()) {
+        total += value
     }
     console.log(total);
 }
@@ -57,10 +56,5 @@ function masking(mask, binary) {
 
 start();
 
-// eerste deel: 
-// 7137727008919 to low
-// 9761139566321 to low
-// 12010536460313 to low
-// 2217719465041
-
+// eerste deel: 13865835758282
 // tweede deel: 
