@@ -19,7 +19,8 @@ function start() {
         sides.push([id, top, bottom, left, right])
     }
 
-    for (let i = 0; i < sides.length; i++) {
+    // make image
+    for (let i = 0; i < sides.length; i++) { // misschien tussendoor matchende sides verwijderen?
         // let matches = 0
         // for (let j = 1; j < sides[i].length; j++) {
         //     for (let k = 0; k < sides.length; k++) {
@@ -33,6 +34,22 @@ function start() {
         //     }
         // }
     }
+
+    // search sea dragons (misschien makkelijk voor tellen om # te verwijderen(nadat gedraaide dragons ook gezocht zijn(voor als ze over elkaar zitten)))
+    for (let i = 0; i < image.length; i++) {
+        
+    }
+
+    // count water roughness (#)
+    let total = 0
+    for (let i = 0; i < image.length; i++) {
+        for (let j = 0; j < image[i].length; j++) {
+            if (image[i].substring(j, j-1) == "#") {
+                total++
+            }
+        }
+    }
+    console.log(total);
 }
 
 function reverseString(str) {
