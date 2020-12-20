@@ -15,7 +15,6 @@ function start() {
                 memory.delete(mem[1]) // huidige weggooien
             }
             memory.set(mem[1], num(masked)) // nieuwe pushen
-            console.log(num(masked));
         }
     }
 
