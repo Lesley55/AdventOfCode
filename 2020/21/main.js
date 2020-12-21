@@ -8,7 +8,7 @@ function start() {
     console.log(total)
 }
 
-start();
+start()
 
 // eerste deel: 
 // tweede deel: 
