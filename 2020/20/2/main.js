@@ -4,6 +4,10 @@ let input = [["Tile 3041:", "#..##.#...", "..#....###", ".#..#.#.##", "..#......
 let sides = []
 let image = []
 
+// while creating image keep track of next to check
+let nextcolumn // right side of top tile
+let next // bottom side (or right side for next column)
+
 function start() {
     // take id and sides
     for (let i = 0; i < input.length; i++) {
@@ -19,45 +23,308 @@ function start() {
         sides.push([id, top, bottom, left, right])
     }
 
-    // make image
-    for (let i = 0; i < sides.length; i++) { // misschien tussendoor matchende sides verwijderen?
-        // let matches = 0
-        // for (let j = 1; j < sides[i].length; j++) {
-        //     for (let k = 0; k < sides.length; k++) {
-        //         if (k !== i) { // skip self
-        //             for (let l = 1; l < sides[k].length; l++) {
-        //                 if (sides[i][j] == sides[k][l] || sides[i][j] == reverseString(sides[k][l])) {
-        //                     matches++
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+    // search tiles where 2 sides don't match anything to get a starting corner
+    for (let i = 0; i < sides.length; i++) {
+        let matches = 0
+        let match = []
+        for (let j = 1; j < 5; j++) {
+            for (let k = 0; k < sides.length; k++) {
+                if (k !== i) { // skip self
+                    for (let l = 1; l < 5; l++) {
+                        if (sides[i][j] == sides[k][l] || sides[i][j] == reverseString(sides[k][l])) {
+                            matches++
+                            match.push(j)
+                        }
+                    }
+                }
+            }
+        }
+        if (matches < 3) { // 2 sides don't match so it is a corner
+            let tile = getTile(sides[i][0])
+
+            // rotate tile to be top left tile (matching sides to bottom right)
+            // match // 1: top, 2: bottom, 3: left, 4: right
+            let rotationsneeded 
+            if (match.includes(1) && match.includes(4)) { 
+                rotationsneeded = 3
+                nextcolumn = reverseString(sides[i][4])
+                next = sides[i][1]
+            } else if (match.includes(1) && match.includes(3)) {
+                rotationsneeded = 2
+                nextcolumn = reverseString(sides[i][3])
+                next = reverseString(sides[i][1])
+            } else if (match.includes(2) && match.includes(3)) {
+                rotationsneeded = 1
+                nextcolumn = sides[i][3]
+                next = reverseString(sides[i][2])
+            } else {
+                // match = 2 & 4, already rotated right
+                nextcolumn = reverseString(sides[i][3])
+                next = reverseString(sides[i][1])
+            }
+
+            // rotate
+            for (let r = 0; r < rotationsneeded; r++) {
+                tile = rotateLeft(tile) 
+            }
+
+            pushandremove(tile, i, true, 0)
+
+            break // only need one corner to start
+        }
     }
 
-    // search sea dragons (misschien makkelijk voor tellen om # te verwijderen(nadat gedraaide dragons ook gezocht zijn(voor als ze over elkaar zitten)))
-    for (let i = 0; i < image.length; i++) {
-        
+    // create image // moet op een betere manier kunnen, maar ik ben al tevreden als het werkt
+    let first = true
+    let begin = 0
+    w: while(sides.length > 0) {
+        let revnext = reverseString(next)
+        // find next tile and add it to the image
+        for (let i = 0; i < sides.length; i++) {
+            for (let j = 1; j < 5; j++) {
+                if (sides[i][j] == next) {
+                    let tile = getTile(sides[i][0])
+                    // align tile
+                    if (j == 1) {
+                        next = sides[i][2]
+                    } else if (j == 2) {
+                        tile = rotateLeft(tile)
+                        tile = rotateLeft(tile)
+                        tile = flip(tile)
+                        next = reverseString(sides[i][1])
+                    } else if (j == 3) {
+                        tile = rotateLeft(tile)
+                        tile = rotateLeft(tile)
+                        tile = rotateLeft(tile)
+                        tile = flip(tile)
+                        next = reverseString(sides[i][4])
+                    } else if (j == 4) {
+                        tile = rotateLeft(tile)
+                        next = sides[i][3]
+                    }
+                    pushandremove(tile, i, first, begin)
+                    begin += tile.length
+                    continue w
+                } else if (sides[i][j] == revnext) {
+                    let tile = getTile(sides[i][0])
+                    // align tile
+                    if (j == 1) {
+                        tile = flip(tile)
+                        next = reverseString(sides[i][2])
+                    } else if (j == 2) {
+                        tile = rotateLeft(tile)
+                        tile = rotateLeft(tile)
+                        next = sides[i][1]
+                    } else if (j == 3) {
+                        tile = rotateLeft(tile)
+                        tile = rotateLeft(tile)
+                        tile = rotateLeft(tile)
+                        next = sides[i][4]
+                    } else if (j == 4) {
+                        tile = rotateLeft(tile)
+                        tile = flip(tile)
+                        next = reverseString(sides[i][3])
+                    }
+                    pushandremove(tile, i, first, begin)
+                    begin += tile.length
+                    continue w
+                }
+            }
+        }
+        // if next tile not found, its the bottom, so find next column
+        first = false
+        begin = 0
+        next = nextcolumn
+        revnext = reverseString(next)
+        for (let i = 0; i < sides.length; i++) {
+            for (let j = 1; j < 5; j++) {
+                if (sides[i][j] == next) {
+                    let tile = getTile(sides[i][0])
+                    // align tile
+                    if (j == 1) {
+                        tile = flip(tile)
+                        tile = rotateLeft(tile)
+                        nextcolumn = reverseString(sides[i][2])
+                        next = sides[i][4]
+                    } else if (j == 2) {
+                        tile = rotateLeft(tile)
+                        tile = rotateLeft(tile)
+                        tile = rotateLeft(tile)
+                        nextcolumn = sides[i][1]
+                        next = reverseString(sides[i][4])
+                    } else if (j == 3) {
+                        nextcolumn = sides[i][4]
+                        next = sides[i][2]
+                    } else if (j == 4) {
+                        tile = flip(tile)
+                        nextcolumn = sides[i][3]
+                        next = reverseString(sides[i][2])
+                    }
+                    pushandremove(tile, i, first, begin)
+                    begin += tile.length
+                    continue w
+                } else if (sides[i][j] == revnext) {
+                    let tile = getTile(sides[i][0])
+                    // align tile
+                    if (j == 1) {
+                        tile = rotateLeft(tile)
+                        nextcolumn = sides[i][2]
+                        next = reverseString(sides[i][4])
+                    } else if (j == 2) {
+                        tile = rotateLeft(tile)
+                        tile = flip(tile)
+                        nextcolumn = reverseString(sides[i][1])
+                        next = sides[i][4]
+                    } else if (j == 3) {
+                        tile = rotateLeft(tile)
+                        tile = flip(tile)
+                        tile = rotateLeft(tile)
+                        tile = rotateLeft(tile)
+                        tile = rotateLeft(tile)
+                        nextcolumn = reverseString(sides[i][4])
+                        next = sides[i][1]
+                    } else if (j == 4) {
+                        tile = rotateLeft(tile)
+                        tile = rotateLeft(tile)
+                        nextcolumn = reverseString(sides[i][3])
+                        next = reverseString(sides[i][1])
+                    }
+                    pushandremove(tile, i, first, begin)
+                    begin += tile.length
+                    continue w
+                }
+            }
+        }
+        // if no next tile and no new column, image should be finished
+        if (sides.length > 0) {
+            console.log("Something went wrong while creating the image")
+            break // no infinite loop while coding
+        }
     }
+    
+    // uncomment for example
+    // image = [".#.#..#.##...#.##..#####", "###....#.#....#..#......", "##.##.###.#.#..######...", "###.#####...#.#####.#..#", "##.#....#.##.####...#.##", "...########.#....#####.#", "....#..#...##..#.#.###..", ".####...#..#.....#......", "#..#.##..#..###.#.##....", "#.####..#.####.#.#.###..", "###.#.#...#.######.#..##", "#.####....##..########.#", "##..##.#...#...#.#.#.#..", "...#..#..#.#.##..###.###", ".#.#....#.##.#...###.##.", "###.#...#..#.##.######..", ".#.#.###.##.##.#..#.##..", ".####.###.#...###.#..#.#", "..#.#..#..#.#.#.####.###", "#..####...#.#.#.###.###.", "#####..#####...###....##", "#.##..#..#...#..####...#", ".#.###..##..##..####.##.", "...###...##...#...#..###"]
+    // image = rotateLeft(image)
+    
+    // note: we only have to search for sea dragons oriented one way, this will not work correct for finding overlapping sea dragons or sea dragons that swim in different directions
+    showseadragons()
 
     // count water roughness (#)
     let total = 0
     for (let i = 0; i < image.length; i++) {
         for (let j = 0; j < image[i].length; j++) {
-            if (image[i].substring(j, j-1) == "#") {
+            if (image[i].substring(j, j+1) == "#") {
                 total++
             }
         }
     }
-    console.log(total);
+    console.log(total)
 }
 
 function reverseString(str) {
-    var split = str.split("");
-    var reverse = split.reverse();
-    return reverse.join("");
+    var split = str.split("")
+    var reverse = split.reverse()
+    return reverse.join("")
 }
 
-start();
+function getTile(id) {
+    let tile = input.filter(item => item[0].substring(5, item[0].length-1) == id) // get tile from input
+    let tile2 = shave(tile[0]) // shave off id and sides
+    return tile2
+}
+
+function shave(tile) { // remove id and shave of the sides from a tile
+    let newtile = []
+    for (let i = 2; i < tile.length-1; i++) {
+        newtile.push(tile[i].substring(1, tile[i].length-1))
+    }
+    return newtile
+}
+
+function rotateLeft(tile) { // rotate tile left / anti clockwise
+    let rotated = []
+    for (let i = 0; i < tile.length; i++) {
+        if(i == 0) {
+            for (let j = 0; j < tile[0].length; j++) {
+                rotated.push(tile[i].substring(j, j+1))
+            }
+        } else {
+            for (let j = 0; j < tile[i].length; j++) {
+                rotated[j] += tile[i].substring(j, j+1)
+            }
+        }
+    }
+    return rotated
+}
+
+function flip(tile) {
+    let flipped = []
+    for (let i = 0; i < tile.length; i++) {
+        let row = ""
+        for (let j = tile[i].length-1; j > 0; j--) {
+            row += tile[i].substring(j, j+1)
+        }
+        flipped.push(row)
+    }
+    return flipped
+}
+
+function pushandremove(tile, i, first, begin) {
+    // push tile to image
+    if (first) {
+        for (let t = 0; t < tile.length; t++) {
+            image.push(tile[t])
+        }
+    } else {
+        for (let t = 0; t < tile.length; t++) {
+            image[begin + t] += tile[t]
+        }
+    }
+    // sides.splice(i, i+1) // remove from sides, used, so no need to check anymore
+    // cant remove, need index to stay the same
+    sides[i][0] = ""
+    sides[i][1] = ""
+    sides[i][2] = ""
+    sides[i][3] = ""
+    sides[i][4] = ""
+}
+
+//                   # 
+// #    ##    ##    ###
+//  #  #  #  #  #  #   
+function showseadragons() {
+    // search sea dragons
+    for (let i = 1; i < image.length-1; i++) {
+        for (let j = 19; j < image[i].length-1; j++) {
+            if (image[i].substring(j-19, j-18) == "#"
+            && image[i+1].substring(j-18, j-17) == "#"
+            && image[i+1].substring(j-15, j-14) == "#"
+            && image[i].substring(j-14, j-12) == "##"
+            && image[i+1].substring(j-12, j-11) == "#"
+            && image[i+1].substring(j-9, j-8) == "#"
+            && image[i].substring(j-8, j-6) == "##"
+            && image[i+1].substring(j-6, j-5) == "#"
+            && image[i+1].substring(j-3, j-2) == "#"
+            && image[i].substring(j-2, j+1) == "###"
+            && image[i-1].substring(j-1, j) == "#") {
+                // change # to O
+                image[i] = image[i].substring(0, j-19) + "O" + image[i].substring(j-18)
+                image[i+1] = image[i+1].substring(0, j-18) + "O" + image[i+1].substring(j-17)
+                image[i+1] = image[i+1].substring(0, j-15) + "O" + image[i+1].substring(j-14)
+                image[i] = image[i].substring(0, j-14) + "OO" + image[i].substring(j-12)
+                image[i+1] = image[i+1].substring(0, j-12) + "O" + image[i+1].substring(j-11)
+                image[i+1] = image[i+1].substring(0, j-9) + "O" + image[i+1].substring(j-8)
+                image[i] = image[i].substring(0, j-8) + "OO" + image[i].substring(j-6)
+                image[i+1] = image[i+1].substring(0, j-6) + "O" + image[i+1].substring(j-5)
+                image[i+1] = image[i+1].substring(0, j-3) + "O" + image[i+1].substring(j-2)
+                image[i] = image[i].substring(0, j-2) + "OOO" + image[i].substring(j+1)
+                image[i-1] = image[i-1].substring(0, j-1) + "O" + image[i-1].substring(j)
+            }
+        }
+    }
+    console.log(image)
+}
+
+start()
 
 // tweede deel: 
