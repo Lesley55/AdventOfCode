@@ -25,33 +25,67 @@ function start() {
     }
     console.log(bus[0] * (bus[1] - time))
 
+
     // part 2
-    let sort = two.sort(function(a, b) { return b[0] - a[0]; }); // groot naar klein
-    let t = sort[0][0]
-    while(true) {
-        console.log(t);
-        let count = 0
-        for (let i = 0; i < sort.length; i++) {
-            if((t + sort[i][1]) % sort[i][0] == 0) {
-                count++
-            } else {
+    // ik had dit zelf nooit kunnen bedenken.
+    // chinese reststelling, ik denk dat ik het kan programmeren, maar de exacte wiskunde erachter is nog een beetje vaag
+
+    let N = two[0][0] // alles keer elkaar
+    for (let i = 1; i < two.length; i++) {
+        N *= two[i][0]
+    }
+
+    let total = 0
+    for (let i = 0; i < two.length; i++) {
+        // verschil vertrektijd staat aan x kant, maar moet naar andere kant vandaar keer -1
+        // x + verschil = 0 (mod input)
+        // x = -verschil (mod input)
+        // x = -verschil + k * input (mod input)
+        // k kleinste positieve getal waarvoor k * input - verschil > 0
+        let b = -1 * two[i][1]
+        while (b < 0) {
+            b += two[i][0]
+        }
+
+        // alle input keer elkaar behalve huidige input
+        let n = N / two[i][0]
+
+        // n modulo input moet gelijk zijn aan 1, zo niet, tel er dan remain bij op net zo lang tot het wel geld (in mijn geval remain keer temp)
+        // b is het aantal keer dat hij opteld dus temp
+        let x
+        let remain = n % two[i][0]
+        let temp = 1
+        while (true) {
+            if ((remain * temp) % two[i][0] == 1) {
+                x = temp
                 break
             }
+            temp++
         }
-        if (count == sort.length) {
-            break
-        } else {
-            t += sort[0][0] // + grootste
+        
+        total += b * n * x // voor elke input optellen
+        if (i == 7) {
+            //     console.log(b, n, x); // deze kloppen
+            //     console.log(b * n * x); // deze niet
+            // total -= 25
+            // total += 4
         }
     }
-    console.log(t);
+
+    console.log(total % N)
+    // console.log(total);
+    // console.log(375 * 2553475888561 * 325); // js kan niet tellen
+
+    // console.log(311204873918371900 == 311204873918371875); // true !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 
 start();
 
 // eerste deel: 3606
-// tweede deel: 
-// na een half miljard nog niet klaar, duurt te lang, ga ik niet op kunnen wachten
-// blijkbaar gebruikt iedereen chinese reststelling https://nl.wikipedia.org/wiki/Chinese_reststelling
-// maar ik snap die formule niet, en je moet eerst nog een andere formule gebuiken https://nl.wikipedia.org/wiki/Algoritme_van_Euclides
-// laat maar zitten dan
+// tweede deel: 379786358533423 // python antwoord maar kan hij hier dus niet berekenen
+
+// getal te groot om te tellen
+// antwoord bij de 7e klopt niet, als ik 375 * 2553475888561 * 325 doe krijg ik
+// in javascript:                           311204873918371900
+// in python:                               311204873918371875
+// in https://www.geogebra.org/scientific:  311204873918371904
