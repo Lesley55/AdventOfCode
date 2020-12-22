@@ -77,57 +77,116 @@ function start() {
     // create image // moet op een betere manier kunnen, maar ik ben al tevreden als het werkt
     let first = true
     let begin = 0
+    let firstcolumn = true
     w: while(sides.length > 0) {
         let revnext = reverseString(next)
         // find next tile and add it to the image
         for (let i = 0; i < sides.length; i++) {
+            let flag = false
             for (let j = 1; j < 5; j++) {
-                if (sides[i][j] == next) {
-                    let tile = getTile(sides[i][0])
-                    // align tile
-                    if (j == 1) {
-                        next = sides[i][2]
-                    } else if (j == 2) {
-                        tile = rotateLeft(tile)
-                        tile = rotateLeft(tile)
-                        tile = flip(tile)
-                        next = reverseString(sides[i][1])
-                    } else if (j == 3) {
-                        tile = rotateLeft(tile)
-                        tile = rotateLeft(tile)
-                        tile = rotateLeft(tile)
-                        tile = flip(tile)
-                        next = reverseString(sides[i][4])
-                    } else if (j == 4) {
-                        tile = rotateLeft(tile)
-                        next = sides[i][3]
+                if (firstcolumn) {
+                    if (sides[i][j] == next && !flag) {
+                        let tile = getTile(sides[i][0])
+                        // align tile
+                        if (j == 1 && matchnothing(sides[i][3], i)) {
+                            next = sides[i][2]
+                        } else if (j == 2 && matchnothing(sides[i][4], i)) {
+                            tile = rotateLeft(tile)
+                            tile = rotateLeft(tile)
+                            tile = flip(tile)
+                            next = reverseString(sides[i][1])
+                        } else if (j == 3 && matchnothing(sides[i][2], i)) {
+                            tile = rotateLeft(tile)
+                            tile = rotateLeft(tile)
+                            tile = rotateLeft(tile)
+                            tile = flip(tile)
+                            next = reverseString(sides[i][4])
+                        } else if (j == 4 && matchnothing(sides[i][1], i)) {
+                            tile = rotateLeft(tile)
+                            next = sides[i][3]
+                        } else {
+                            flag = true
+                            j--
+                            continue
+                        }
+                        pushandremove(tile, i, first, begin)
+                        begin += tile.length
+                        continue w
+                    } else if (sides[i][j] == revnext) {
+                        let tile = getTile(sides[i][0])
+                        // align tile
+                        if (j == 1 && matchnothing(sides[i][4], i)) {
+                            tile = flip(tile)
+                            next = reverseString(sides[i][2])
+                        } else if (j == 2 && matchnothing(sides[i][4], i)) {
+                            tile = rotateLeft(tile)
+                            tile = rotateLeft(tile)
+                            next = sides[i][1]
+                        } else if (j == 3 && matchnothing(sides[i][2], i)) {
+                            tile = rotateLeft(tile)
+                            tile = rotateLeft(tile)
+                            tile = rotateLeft(tile)
+                            next = sides[i][4]
+                        } else if (j == 4 && matchnothing(sides[i][2], i)) {
+                            tile = rotateLeft(tile)
+                            tile = flip(tile)
+                            next = reverseString(sides[i][3])
+                        } else {
+                            flag = false
+                            continue
+                        }
+                        pushandremove(tile, i, first, begin)
+                        begin += tile.length
+                        continue w
                     }
-                    pushandremove(tile, i, first, begin)
-                    begin += tile.length
-                    continue w
-                } else if (sides[i][j] == revnext) {
-                    let tile = getTile(sides[i][0])
-                    // align tile
-                    if (j == 1) {
-                        tile = flip(tile)
-                        next = reverseString(sides[i][2])
-                    } else if (j == 2) {
-                        tile = rotateLeft(tile)
-                        tile = rotateLeft(tile)
-                        next = sides[i][1]
-                    } else if (j == 3) {
-                        tile = rotateLeft(tile)
-                        tile = rotateLeft(tile)
-                        tile = rotateLeft(tile)
-                        next = sides[i][4]
-                    } else if (j == 4) {
-                        tile = rotateLeft(tile)
-                        tile = flip(tile)
-                        next = reverseString(sides[i][3])
+                } else {
+                    if (sides[i][j] == next) {
+                        let tile = getTile(sides[i][0])
+                        // align tile
+                        if (j == 1) {
+                            next = sides[i][2]
+                        } else if (j == 2) {
+                            tile = rotateLeft(tile)
+                            tile = rotateLeft(tile)
+                            tile = flip(tile)
+                            next = reverseString(sides[i][1])
+                        } else if (j == 3) {
+                            tile = rotateLeft(tile)
+                            tile = rotateLeft(tile)
+                            tile = rotateLeft(tile)
+                            tile = flip(tile)
+                            next = reverseString(sides[i][4])
+                        } else if (j == 4) {
+                            tile = rotateLeft(tile)
+                            next = sides[i][3]
+                        }
+                        pushandremove(tile, i, first, begin)
+                        begin += tile.length
+                        continue w
+                    } else if (sides[i][j] == revnext) {
+                        let tile = getTile(sides[i][0])
+                        // align tile
+                        if (j == 1) {
+                            tile = flip(tile)
+                            next = reverseString(sides[i][2])
+                        } else if (j == 2) {
+                            tile = rotateLeft(tile)
+                            tile = rotateLeft(tile)
+                            next = sides[i][1]
+                        } else if (j == 3) {
+                            tile = rotateLeft(tile)
+                            tile = rotateLeft(tile)
+                            tile = rotateLeft(tile)
+                            next = sides[i][4]
+                        } else if (j == 4) {
+                            tile = rotateLeft(tile)
+                            tile = flip(tile)
+                            next = reverseString(sides[i][3])
+                        }
+                        pushandremove(tile, i, first, begin)
+                        begin += tile.length
+                        continue w
                     }
-                    pushandremove(tile, i, first, begin)
-                    begin += tile.length
-                    continue w
                 }
             }
         }
@@ -136,26 +195,27 @@ function start() {
         begin = 0
         next = nextcolumn
         revnext = reverseString(next)
+        firstcolumn = false
         for (let i = 0; i < sides.length; i++) {
             for (let j = 1; j < 5; j++) {
                 if (sides[i][j] == next) {
                     let tile = getTile(sides[i][0])
                     // align tile
-                    if (j == 1) {
+                    if (j == 1 && matchnothing(sides[i][3], i)) {
                         tile = flip(tile)
                         tile = rotateLeft(tile)
                         nextcolumn = reverseString(sides[i][2])
                         next = sides[i][4]
-                    } else if (j == 2) {
+                    } else if (j == 2 && matchnothing(sides[i][3], i)) {
                         tile = rotateLeft(tile)
                         tile = rotateLeft(tile)
                         tile = rotateLeft(tile)
                         nextcolumn = sides[i][1]
                         next = reverseString(sides[i][4])
-                    } else if (j == 3) {
+                    } else if (j == 3 && matchnothing(sides[i][1], i)) {
                         nextcolumn = sides[i][4]
                         next = sides[i][2]
-                    } else if (j == 4) {
+                    } else if (j == 4 && matchnothing(sides[i][1], i)) {
                         tile = flip(tile)
                         nextcolumn = sides[i][3]
                         next = reverseString(sides[i][2])
@@ -166,16 +226,16 @@ function start() {
                 } else if (sides[i][j] == revnext) {
                     let tile = getTile(sides[i][0])
                     // align tile
-                    if (j == 1) {
+                    if (j == 1 && matchnothing(sides[i][3], i)) {
                         tile = rotateLeft(tile)
                         nextcolumn = sides[i][2]
                         next = reverseString(sides[i][4])
-                    } else if (j == 2) {
+                    } else if (j == 2 && matchnothing(sides[i][3], i)) {
                         tile = rotateLeft(tile)
                         tile = flip(tile)
                         nextcolumn = reverseString(sides[i][1])
                         next = sides[i][4]
-                    } else if (j == 3) {
+                    } else if (j == 3 && matchnothing(sides[i][2], i)) {
                         tile = rotateLeft(tile)
                         tile = flip(tile)
                         tile = rotateLeft(tile)
@@ -183,7 +243,7 @@ function start() {
                         tile = rotateLeft(tile)
                         nextcolumn = reverseString(sides[i][4])
                         next = sides[i][1]
-                    } else if (j == 4) {
+                    } else if (j == 4 && matchnothing(sides[i][2], i)) {
                         tile = rotateLeft(tile)
                         tile = rotateLeft(tile)
                         nextcolumn = reverseString(sides[i][3])
@@ -325,6 +385,19 @@ function showseadragons() {
         }
     }
     console.log(image)
+}
+
+function matchnothing(side, index) {
+    for (let i = 0; i < sides.length; i++) {
+        if (i !== index) { // skip self
+            for (let j = 1; j < sides[i].length; j++) {
+                if (side == sides[i][j] || side == reverseString(sides[i][j])) {
+                    return false
+                }
+            }
+        }
+    }
+    return true
 }
 
 start()
