@@ -11,15 +11,42 @@ function start() {
 }
 
 function solve(expression) {
-    let answer = 0
-    
-    if (!isNaN()) {
-        
+    console.log(expression);
+    let open = 0
+    let begin = null
+    let end = null
+    for (let i = 0; i < expression.length; i++) {
+        if (expression.substring(i, i+1) == "(") {
+            open++
+            if (begin == null) {
+                begin = i
+            }
+        } else if (expression.substring(i, i+1) == ")") {
+            open--
+        }
+        if (open == 0 && begin !== null) {
+            end = i
+            expression = expression.substring(0, begin) + solve(expression.substring(begin+1, end)) + expression.substring(end+1)
+            console.log(expression);
+            begin = null
+            i = 0 // doordat de string veranderd klopt index niet meer en vergeet hij haakjes, dus ik laat hem hier gwn opnieuw zoeken vanaf het begin
+        }
     }
-    return answer
+    // if no ( or )
+    let exp = expression.split(" ")
+    let ans = parseInt(exp[0])
+    for (let i = 0; i < exp.length-2; i+=2) {
+        if (exp[1+i] == "+") {
+            ans += parseInt(exp[2+i])
+        } else if (exp[1+i] == "*") {
+            ans *= parseInt(exp[2+i])
+        }
+    }
+    console.log(ans);
+    return ans
 }
 
 start();
 
-// eerste deel: 
+// eerste deel: 4491283311856
 // tweede deel: 
