@@ -34,11 +34,19 @@ function solve(expression) {
     }
     // if no ( or )
     let exp = expression.split(" ")
+    while(exp.includes("+")) {
+        for (let i = 0; i < exp.length-2; i+=2) {
+            if (exp[1+i] == "+") {
+                let a = parseInt(exp[i]) + parseInt(exp[i+2])
+                exp[i] = a.toString()
+                exp.splice(i+1, 2)
+                i = 0 // restart
+            }
+        }
+    }
     let ans = parseInt(exp[0])
     for (let i = 0; i < exp.length-2; i+=2) {
-        if (exp[1+i] == "+") {
-            ans += parseInt(exp[2+i])
-        } else if (exp[1+i] == "*") {
+        if (exp[1+i] == "*") {
             ans *= parseInt(exp[2+i])
         }
     }
@@ -48,5 +56,4 @@ function solve(expression) {
 
 start();
 
-// eerste deel: 4491283311856
-// tweede deel: 
+// tweede deel: 68852578641904
