@@ -15,6 +15,7 @@ function start() {
         arr.push([ingredients, allergen])
     }
 
+    // search ingredient containing allergen and push to linked
     for (let i = 0; i < arr.length; i++) {
         for (let j = 0; j < arr[i][1].length; j++) {
             let inc = arr[i][0]
