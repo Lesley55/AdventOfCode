@@ -31,4 +31,3 @@ function start() {
 start()
 
 // eerste deel: 32495
-// tweede deel: 
