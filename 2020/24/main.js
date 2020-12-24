@@ -2,10 +2,11 @@ let input = ["seseswnwseneweseswseswnwnese", "neneeneseneeeesenewwne", "swswswne
 "wewneseeswwwnwneewnwswwswswwsesw", "swseeewseswwswswneswswnwswsw", "seewswwswwswsenwnwswwswnewswswswsww", "seswswswsesesenewswswsenwswswswneswswsw", "enwwwwswswwwswsewswnwnwseeswnwwsw", "seneseneswseswseseswwwsweseswnwesesese", "eswnesweswswswswnwswswswswwwsw", "eeeeweeseseneewe", "swnenwenwnwnenesewwswnwnwnwnwne", "seswneswswwwsewenewwswwswwwww", "seswseseswswswswswsenwsesenwneeewseswswse", "wwnwnwwwenwwnwnww", "seswseeseeseeneesesesewnese", "wnwnwwnesewwwswewsesewnwewwe", "swnwseswswswnweswneweswswswswswswnesw", "swseseseseseswswseswne", "nwswwwwnwswnwsesewenewwsesenwnenw", "swwnwsweeewnwnwwsweseswsw", "nwnwnwnweswnwsenwnwnwnwnwnwnwnww", "eswnenwswnwneeneee", "enweneeeeeeesenenee", "nwwnwweneeseenenenwnwnwwswswnenenw", "eeeneseesweeeewenwesweeee", "swswnewswwsesenwwswswwwwewneswswnesw", "seseseseseseseesesewesesewe", "neswwwwwneswwswwwwsewneneww", "wsewwwwwwnwnwnwwnwnww", "nenwneneneneneseneneenenenewneswnwesene", "swnwseseswswswseweswsweswswnwnesewseesw", "weswswneswseewwnwnwneseesese", "eewwnwnweswww", "swwwwwwwswsewwewswnewwneww", "senesesesenwnwnwnenewsenwnwnewnw", "nwnenwnwnenenwewseenwnwnenwnwwnewnw", "wwwweswwseneneseenwseswnwwnwwwnw", "nwnwwswnenwnwnwwwseewswnwnenweww", "neswnwnewneneeneneneneneneneneseswnesene", "eeenwewseeenwsewnwsewe", "nwnwwnwwnesenwnwnwnwnwnwsenwnwswnenwnw", "nwseswswswnewnenwnwneneenenwwneneeesw", "nwnwnwnwwswsenweenwnweenwnwnwswnwnww", "nwesweeeeenweeseweeeeewee", "swseseswseswswswswnwnwswswsweneswswsese", "swesesweeswswswnwwswswswsewse", "wswswweseswswswenwswnwswswnwwwwsw", "wsesesesenwswswnwseseseeseseesesesese", "wsenewwwwwwwwnewsew", "ewswwwwswwwwwnwweswww", "enwwnwnenwesewne", "wswswseswsesesenesesesese", "swseseseswseseseswswnewe", "swswnwnenenwswneneneneenenenenenwswnenw", "eneeseeseenewseeseewe", "nwneseswswswswswnwswswswswwneeseswswne", "swswsesesesenwseseesenew", "newnwsenwsenenwnwnenwnwnwnesenwwnwnw", "eneenenewwneneneneneneseneenesene", "wnwseweeenwswsewwneswwneenewewe", "nwnwnwwwnwwneenwsenenwseswnwswwnwnw", "nwnwswneneswnwnwnenwwnweswswwnwnenwnw", "neneenweseswseeewneweneenweseee", "eeneweseeeeenwsenweneeeeswswe", "ewsewswnwwwwnwneewseswneenewswwe", "eeweeesweeeneeeeswswseenwnwee", "nwnweswswsewwsenesweswwnwnwenwswe", "wwewwsesenwswnwwsenwnenwwnwsewwnw", "eewsewwnewwwwneswwwswswswww", "enwewswesenweenwneewseswseeee", "sesenewswwwweneneseeswnwnenwneee", "nwewnwsewnwnenwwnewwse", "eseeseseeesesesenwseneswneneswesew", "wswwseenewswenwwweswswnenww", "neseswseseeswswswwswswnwsenwsweseswswse", "eeswwenwnenwneeweseweswneswene", "nenwnenwnwnwneneswnenenenwneenenwswseswnw", "swneeeeseenweneseeweswneesenwenwsw", "nwnwnwsenwwnwsenwnwne", "newwnwsenwnewsewswnenwswwenenwnesese", "senwsenwnesenwnewnenwne"]
 // array, every second row has an offset
 let floor = []
+let copy = []
 
 function start() {
     // vul array
-    let size = 41 // longest input is 41, less is prob enough
+    let size = 241 // longest input is 41, less is prob enough, part 2 loops 100 times, can increase 100 times all sides so is just add 200
     for (let i = 0; i < size; i++) {
         floor.push([])
         for (let j = 0; j < size; j++) {
@@ -16,8 +17,8 @@ function start() {
 
     for (let i = 0; i < input.length; i++) {
         // reference tile, middle
-        let x = 20
-        let y = 20
+        let x = 120
+        let y = 120
         
         // navigate to tile
         for (let j = 0; j < input[i].length; j++) {
@@ -64,9 +65,61 @@ function start() {
         // flip
         floor[y][x] = !floor[y][x]
     }
-    console.log(floor);
+    console.log("part 1", count());
 
-    // count black tiles
+
+    // part 2
+    copy = JSON.parse(JSON.stringify(floor))
+    for (let i = 0; i < 100; i++) {
+        for (let y = 0; y < floor.length; y++) {
+            for (let x = 0; x < floor[y].length; x++) {
+                let surround = 0
+                if (x+1 < floor[y].length && floor[y][x+1]) {
+                    surround++
+                }
+                if (x-1 >= 0 && floor[y][x-1]) {
+                    surround++
+                }
+                if (y % 2 == 0) {
+                    if (y+1 < floor.length && floor[y+1][x]) {
+                        surround++
+                    }
+                    if (y+1 < floor.length && x-1 >= 0 && floor[y+1][x-1]) {
+                        surround++
+                    }
+                    if (y-1 >= 0 && floor[y-1][x]) {
+                        surround++
+                    }
+                    if (y-1 >= 0 && x-1 >= 0 && floor[y-1][x-1]) {
+                        surround++
+                    }
+                } else {
+                    if (y+1 < floor.length && x+1 < floor[y].length && floor[y+1][x+1]) {
+                        surround++
+                    }
+                    if (y+1 < floor.length && floor[y+1][x]) {
+                        surround++
+                    }
+                    if (y-1 >= 0 && x+1 < floor[y].length && floor[y-1][x+1]) {
+                        surround++
+                    }
+                    if (y-1 >= 0 && floor[y-1][x]) {
+                        surround++
+                    }
+                }
+                if (floor[y][x] && (surround == 0 || surround > 2)) {
+                    copy[y][x] = !floor[y][x]
+                } else if (!floor[y][x] && surround == 2) {
+                    copy[y][x] = !floor[y][x]
+                }
+            }
+        }
+        floor = JSON.parse(JSON.stringify(copy))
+    }
+    console.log("part 2", count());
+}
+
+function count() {
     let total = 0
     for (let i = 0; i < floor.length; i++) {
         for (let j = 0; j < floor[i].length; j++) {
@@ -75,10 +128,10 @@ function start() {
             }
         }
     }
-    console.log(total);
+    return total
 }
 
 start()
 
 // eerste deel: 282
-// tweede deel: 
+// tweede deel: 3445
