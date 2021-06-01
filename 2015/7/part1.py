@@ -7,12 +7,18 @@ while len(input) > 0:
     while i < len(input):
         a = input[i].replace('-> ','').split(' ')
         if len(a) == 2:
-            if a[0].isdigit() or a[0] in wires:
+            if a[0].isdigit():
                 wires[a[1]] = int(a[0])
+                input.pop(i)
+            elif a[0] in wires:
+                wires[a[1]] = wires[a[0]]
                 input.pop(i)
         elif len(a) == 3:
             if a[1] in wires:
-                wires[a[2]] = ~wires[a[1]]
+                wires[a[2]] = ~ wires[a[1]]
+                input.pop(i)
+            elif a[1].isdigit():
+                wires[a[2]] = ~ int(a[1])
                 input.pop(i)
         elif len(a) == 4:
             if a[0] in wires:
@@ -22,18 +28,44 @@ while len(input) > 0:
                 elif a[1] == "LSHIFT":
                     wires[a[3]] = wires[a[0]] << int(a[2])
                     input.pop(i)
-            elif a[0] in wires and a[2] in wires:
-                if a[1] == "AND":
-                    wires[a[3]] = wires[a[0]] & wires[a[2]]
+                elif a[2] in wires:
+                    if a[1] == "AND":
+                        wires[a[3]] = wires[a[0]] & wires[a[2]]
+                        input.pop(i)
+                    elif a[1] == "OR":
+                        wires[a[3]] = wires[a[0]] | wires[a[2]]
+                        input.pop(i)
+                elif a[2].isdigit():
+                    if a[1] == "AND":
+                        wires[a[3]] = wires[a[0]] & int(a[2])
+                        input.pop(i)
+                    elif a[1] == "OR":
+                        wires[a[3]] = wires[a[0]] | int(a[2])
+                        input.pop(i)
+            elif a[0].isdigit():
+                if a[1] == "RSHIFT":
+                    wires[a[3]] = int(a[0]) >> int(a[2])
                     input.pop(i)
-                elif a[1] == "OR":
-                    wires[a[3]] = wires[a[0]] | wires[a[2]]
+                elif a[1] == "LSHIFT":
+                    wires[a[3]] = int(a[0]) << int(a[2])
                     input.pop(i)
+                elif a[2] in wires:
+                    if a[1] == "AND":
+                        wires[a[3]] = int(a[0]) & wires[a[2]]
+                        input.pop(i)
+                    elif a[1] == "OR":
+                        wires[a[3]] = int(a[0]) | wires[a[2]]
+                        input.pop(i)
+                elif a[2].isdigit():
+                    if a[1] == "AND":
+                        wires[a[3]] = int(a[0]) & int(a[2])
+                        input.pop(i)
+                    elif a[1] == "OR":
+                        wires[a[3]] = int(a[0]) | int(a[2])
+                        input.pop(i)
         i += 1
     i = 0
-    # print(wires)
-    print(len(wires))
 
 print(wires["a"])
 
-# part 1: 
+# part 1: 46065
