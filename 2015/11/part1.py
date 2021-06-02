@@ -42,6 +42,14 @@ def valid():
 
     return True
 
+p1 = input
+while True:
+    incr(len(input)-1)
+    if valid():
+        p1 = input
+        print(input)
+        break
+
 while True:
     incr(len(input)-1)
     if valid():
@@ -49,3 +57,4 @@ while True:
         break
 
 # part 1: hepxxyzz
+# part 2: heqaabcc
