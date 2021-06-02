@@ -10,12 +10,12 @@ def find(zero):
         result = hashlib.md5(s.encode())
         hex = result.hexdigest()
 
-        if hex[0:5] == zero:
+        if hex[0:6] == zero:
             print(number)
             break
 
         number += 1
 
-find("00000")
+find("000000")
 
-# part 1: 346386
+# part 2: 9958218
