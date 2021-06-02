@@ -58,4 +58,5 @@ print(total)
 
 
 
-# 1342 maar beetje gecheat omdat ik t beu was
+# part 1: 1342 maar beetje gecheat omdat ik t beu was
+# part 2: 2074 -----------
