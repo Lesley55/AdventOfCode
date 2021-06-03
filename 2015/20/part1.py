@@ -1,14 +1,26 @@
+import math
+
 input = 34000000
 
-i = 1
+y = 1
 while True:
-    presents = 0
-    k = 1
-    while k <= i:
-        if i % k == 0:
-            presents += k * 10
-        k += 1
-    if presents > input:
-        print(i)
+    def divSum(num) :
+        result = 0
+        i = 2
+        while i<= (math.sqrt(num)) :
+            if (num % i == 0) :
+                if (i == (num / i)) :
+                    result = result + i
+                else :
+                    result = result + (i + num/i)
+            i = i + 1
+        return (result + 1)
+    presents = divSum(y)
+
+    if presents * 10 > input:
+        print(y)
         break
-    i += 1
+    y += 1
+
+# part 1: 831600 to high
+#         1048320
