@@ -24,3 +24,4 @@ solve(input)
 print(total)
 
 # part 2: 118031 high
+# 96852
