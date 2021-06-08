@@ -10,7 +10,7 @@ for i in input:
     city.add(c[0])
     city.add(c[2])
 
-small = 99999999999999
+big = 0
 
 # loop all possible routes
 for comb in permutations(city):
@@ -27,10 +27,10 @@ for comb in permutations(city):
                 all = False  # only executed if the inner loop did NOT break
     
     if all:
-        if dist < small:
+        if dist > big:
             print(comb)
-            small = dist
+            big = dist
 
-print(small)
+print(big)
 
-# part 1: 207
+# part 2: 804
