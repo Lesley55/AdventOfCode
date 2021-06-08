@@ -4,7 +4,7 @@ ingredients = []
 
 for i in input:
     j = i.replace(",", "").split()
-    ingredients.append([int(j[2]), int(j[4]), int(j[6]), int(j[8])])
+    ingredients.append([int(j[2]), int(j[4]), int(j[6]), int(j[8]), int(j[10])])
 
 highest = 0
 
@@ -18,12 +18,14 @@ for i in range(101):
                     durability = 0
                     flavor = 0
                     texture = 0
+                    calories = 0
                     letters = [i, j, k, l]
                     for m in range(len(ingredients)):
                         capacity += letters[m] * ingredients[m][0]
                         durability += letters[m] * ingredients[m][1]
                         flavor += letters[m] * ingredients[m][2]
                         texture += letters[m] * ingredients[m][3]
+                        calories += letters[m] * ingredients[m][4]
                     if capacity < 0:
                         capacity = 0
                     if durability < 0:
@@ -32,10 +34,11 @@ for i in range(101):
                         flavor = 0
                     if texture < 0:
                         texture = 0
-                    total = capacity * durability * flavor * texture
-                    if total > highest:
-                        highest = total
+                    if calories == 500:
+                        total = capacity * durability * flavor * texture
+                        if total > highest:
+                            highest = total
 
 print(highest)
 
-# part 1: 18965440
+# part 2: 15862900
