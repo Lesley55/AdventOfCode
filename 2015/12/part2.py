@@ -12,9 +12,9 @@ def solve(i):
             solve(j)
     elif type(i) == dict:
         for j in i.items():
-            for k in j:
-                if k == "red":
-                    return
+            if "red" in j:
+                return
+        for j in i.items():
             for k in j:
                 solve(k)
     elif type(i) == int:
@@ -23,5 +23,4 @@ def solve(i):
 solve(input)
 print(total)
 
-# part 2: 118031 high
-# 96852
+# part 2: 96852
