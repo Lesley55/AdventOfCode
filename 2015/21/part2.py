@@ -2,7 +2,7 @@ weapons = [[8, 4, 0], [10, 5, 0], [25, 6, 0], [40, 7, 0], [74, 8, 0]]
 armor = [[0, 0, 0], [13, 0, 1], [31, 0, 2], [53, 0, 3], [75, 0, 4], [104, 0, 5]]
 rings = [[0, 0, 0], [0, 0, 0], [25, 1, 0], [50, 2, 0], [100, 3, 0], [20, 0, 1], [40, 0, 2], [80, 0, 3]]
 
-min = 999999999
+max = 0
 for w in weapons:
     for a in armor:
         for r in rings:
@@ -37,14 +37,14 @@ for w in weapons:
                                 diff = 1
                             playerHitPoints -= diff
                         
-                        if playerHitPoints <= 0:
+                        if bossHitPoints <= 0:
                             break
-                        elif bossHitPoints <= 0:
-                            if gold < min:
-                                min = gold
+                        elif playerHitPoints <= 0:
+                            if gold > max:
+                                max = gold
                             break
                         i += 1
 
-print(min)
+print(max)
 
-# part 1: 78
+# part 2: 148
