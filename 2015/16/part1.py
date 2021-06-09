@@ -8,13 +8,15 @@ for i in input:
     
 print(len(inp))
 
-for p in range(10): # i think it skips 1 when removing a sue, so just to be sure, making multiple iterations
-    for i in inp:
-        j = i.replace(":", "").replace(",", "").split()
-        for m in mf:
-            if (m == j[2] and mf[m] <= int(j[3])) or (m == j[4] and mf[m] <= int(j[5])) or (m == j[6] and mf[m] <= int(j[7])):
-                if i in inp:
-                    inp.remove(i)
+i = 0
+while i < len(inp):
+    j = inp[i].replace(":", "").replace(",", "").split()
+    for m in mf:
+        if (m == j[2] and mf[m] > int(j[3])) or (m == j[4] and mf[m] > int(j[5])) or (m == j[6] and mf[m] > int(j[7])):
+            inp.remove(inp[i])
+            i -= 1
+            break
+    i += 1
 
 print(len(inp))
 print(inp)
