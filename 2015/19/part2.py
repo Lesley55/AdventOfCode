@@ -4,45 +4,24 @@ input = "ORnPBPMgArCaCaCaSiThCaCaSiThCaCaPBSiRnFArRnFArCaCaSiThCaCaSiThCaCaCaCaC
 # replacements = ["e => H", "e => O", "H => HO", "H => OH", "O => HH"]
 # input = "HOH"
 
-short = 9999999999999999999999999999999
+distinct = set()
+distinct.add("e")
 
-def f(e, n):
-    global short
-    if e == input:
-        if n < short:
-            short = n
-            print(short)
-        return
-    if len(e) > len(input):
-        return
-    for i in replacements:
-        r = i.split(" ")
-        # trying to optimize a bit
-
-        # if len(e) > 6:
-        #     if e[0:len(e)-6] == input[0:len(e)-6]:
-        #         for k in range(6):
-        #             j = len(e)-5 + k
-        #             if e[j:j+len(r[0])] == r[0]:
-        #                 new = e[0:j] + r[2] + e[j+len(r[0]):len(e)]
-        #                 f(new, n+1)
-        
-        for t in range(len(e)):
-            if not e[t] == input[t]:
-                for k in range(len(e)-t+1):
-                    j = len(e)-t-1 + k
-                    if e[j:j+len(r[0])] == r[0]:
-                        new = e[0:j] + r[2] + e[j+len(r[0]):len(e)]
-                        f(new, n+1)
-                break
-        
-        # else:
-        #     for j in range(len(e)):
-        #         if e[j:j+len(r[0])] == r[0]:
-        #             new = e[0:j] + r[2] + e[j+len(r[0]):len(e)]
-        #             f(new, n+1)
-
-f("e", 0)
-print(short)
+loops = 1
+go = True
+while go:
+    dis = set()
+    for b in distinct:
+        for i in replacements:
+            r = i.split(" ")
+            for j in range(len(b)):
+                if b[j:j+len(r[0])] == r[0]:
+                    new = b[0:j] + r[2] + b[j+len(r[0]):len(b)]
+                    if new == input:
+                        print(loops)
+                        go = False
+                    elif not len(new) > len(input):
+                        dis.add(new)
+    distinct = dis
 
 # part 2: bruteforcing all possible ways will take WAY to long
