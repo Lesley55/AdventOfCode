@@ -4,10 +4,10 @@ possible = 0
 
 for i in input:
     tri = i.split()
-    for t in range(len(tri)):
+    for t in range(3):
         tri[t] = int(tri[t])
     tri.sort()
-    if int(tri[0]) + int(tri[1]) > int(tri[2]):
+    if tri[0] + tri[1] > tri[2]:
         possible += 1
 
 print(possible)
