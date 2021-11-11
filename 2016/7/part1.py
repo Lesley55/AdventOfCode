@@ -28,4 +28,4 @@ for i in input:
 
 print(total)
 
-# part 1: 
+# part 1: 118
