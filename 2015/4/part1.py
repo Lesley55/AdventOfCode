@@ -1,9 +1,21 @@
+import hashlib
+
 input = "iwrupvqb"
 
-for i in input:
-    if i == "^":
-        y += 1
-    elif i == "v":
-        y -= 1
+def find(zero):
+    number = 1
 
-print()
+    while True:
+        s = input + str(number)
+        result = hashlib.md5(s.encode())
+        hex = result.hexdigest()
+
+        if hex[0:5] == zero:
+            print(number)
+            break
+
+        number += 1
+
+find("00000")
+
+# part 1: 346386
