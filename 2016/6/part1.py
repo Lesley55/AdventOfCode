@@ -21,11 +21,16 @@ for i in input:
 
 print(all)
 
-message = ""
+message_part_1 = ""
+message_part_2 = ""
 for i in all:
     most_occurring_char_index = max(all[i], key=all[i].get)
-    message += alphabet[most_occurring_char_index]
+    least_occurring_char_index = min(all[i], key=all[i].get)
+    message_part_1 += alphabet[most_occurring_char_index]
+    message_part_2 += alphabet[least_occurring_char_index]
 
-print(message)
+print(message_part_1)
+print(message_part_2)
 
 # part 1: asvcbhvg
+# part 2: 
