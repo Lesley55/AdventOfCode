@@ -47,4 +47,15 @@ for i in screen:
             total += 1
 print(total)
 
+# part 2
+for i in range(height):
+    for j in range(width):
+        if screen[i][j]:
+            screen[i][j] = "#"
+        else:
+            screen[i][j] = "."
+    screen[i] = "".join(screen[i])
+    print(screen[i])
+
 # part 1: 123
+# part 2: afbupzbjps
