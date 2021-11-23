@@ -56,7 +56,7 @@ for i in input:
 for i in g:
     bots[int(i[5])].give(int(i[1]))
 
-for i in range(100):
+for r in range(100):
     for i in bots:
         bots[i].check()
 
