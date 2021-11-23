@@ -61,3 +61,7 @@ for i in range(100):
         bots[i].check()
 
 # part 1: 86
+
+print(outputs[0][0] * outputs[1][0] * outputs[2][0])
+
+# part 2: 22847
