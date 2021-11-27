@@ -1,8 +1,25 @@
 input = open("input.txt")
 
+discs = []
+
 for i in input:
-    pass
+    a = i.replace('.', '').split()
+    discs.append([int(a[3]), int(a[11])])
 
-print()
+time = 0
 
-# part 1:
+def check():
+    for i in range(len(discs)):
+        if (discs[i][1] + time + i) % discs[i][0] == 0:
+            continue
+        else:
+            return False
+    return True
+
+while True:
+    time += 1
+    if check():
+        print(time-1)
+        break
+
+# part 1: 203660
