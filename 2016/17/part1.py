@@ -2,20 +2,14 @@ import hashlib
 
 passcode = "hhhxzeay"
 
-furthestRightDown = [0, passcode]
 open = "bcdef"
 possible = [[0,0,passcode]]
 
-def check(x, y, input):
-    global furthestRightDown
-    if (x + y) > furthestRightDown[0]:
-        furthestRightDown = [x + y, input]
-        print(furthestRightDown)
-
 def nextDoor(x, y, input):
     if x < 0 or y < 0 or 4 <= x or 4 <= y:
-        return
-    check(x, y, input)
+        return False
+    elif x == 3 and y == 3:
+        return True
 
     result = hashlib.md5(input.encode())
     hex = result.hexdigest()
@@ -33,8 +27,8 @@ def nextDoor(x, y, input):
                 possible.append([x + 1, y, input + "R"])
 
 for i in possible:
-    nextDoor(i[0], i[1], i[2])
-
-print(furthestRightDown)
+    if nextDoor(i[0], i[1], i[2]):
+        print(i[2])
+        break
 
 # part 1: DDRUDLRRRD
