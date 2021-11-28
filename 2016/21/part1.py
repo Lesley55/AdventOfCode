@@ -39,6 +39,6 @@ for i in input:
 
 print(pw)
 
-# part 1: fhagcedb (>= 4 ipv > 4) and becfhgad(??????) wrong
+# part 1: fhagcedb(>= 4 ipv > 4) and becfhgad(??????) wrong
 
-# alles appart getest, goede output, test example erin gegooit, na elke stap goede antwoord, zou gwn moeten werken, idk wat er fout is
+# alles appart getest, goede output, test voorbeeld erin gegooit, na elke stap goede antwoord, zou gwn moeten werken, idk wat er fout is
