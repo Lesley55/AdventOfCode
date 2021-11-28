@@ -22,4 +22,4 @@ while len(elves) > 1:
 
 print(elves[0] + 1)
 
-# part 2:
+# part 2: 1407007
