@@ -62,18 +62,11 @@ for i in p:
 
 print(steps)
 
+# ------------------------------------------------------------------------------------
 # code is kinda bad, so taking the ez way out:
-# first and second row don't have high blocking the way, so once in place its just 5 or 6 steps per side move for the target
-# empty starts at x 8, y 28, road up is free, then around target, so just count the steps till x 0, y 27 
-# = 9 steps to get in place
-# then 27 times 5 steps = 135
-# total 144 steps?
+# empty starts at x 8, y 28
+# blocking is one line at y 22 from x 2 till x end
+# go around: 27 up + 8 left + 33 down to get to target position and
+# then move every move up is 5 steps * 33 rows = 233 steps
 
-# doing this completely wrong, target = x 34 y 0 not x 0 y 28
-
-# so again
-# blocking at y 22 form x high to x 2
-# around 28 left + (34 - 8 = 26 down) + 5 * 33
-# = 219 steps
-
-# part 2: 219 low ?
+# part 2: 233
