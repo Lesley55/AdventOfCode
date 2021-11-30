@@ -41,4 +41,4 @@ for i in input:
 
 print(pw)
 
-# part 1: fhagcedb(>= 4 ipv > 4) and becfhgad(??????) wrong
+# part 1: bdfhgeca
