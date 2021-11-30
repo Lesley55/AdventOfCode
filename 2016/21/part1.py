@@ -17,9 +17,11 @@ for i in input:
                     pw = pw[:j] + i[2] + pw[j+1:]
     elif i[0] == "rotate":
         if i[1] == "left":
-            pw = pw[1:] + pw[0]
+            for j in range(int(i[2])):
+                pw = pw[1:] + pw[0]
         elif i[1] == "right":
-            pw = pw[len(pw)-1] + pw[:len(pw)-1]
+            for j in range(int(i[2])):
+                pw = pw[len(pw)-1] + pw[:len(pw)-1]
         elif i[1] == "based":
             index = pw.find(i[6])
             if index >= 4:
@@ -40,5 +42,3 @@ for i in input:
 print(pw)
 
 # part 1: fhagcedb(>= 4 ipv > 4) and becfhgad(??????) wrong
-
-# alles appart getest, goede output, test voorbeeld erin gegooit, na elke stap goede antwoord, zou gwn moeten werken, idk wat er fout is
