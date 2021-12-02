@@ -1,6 +1,6 @@
 input = open("input.txt")
 
-depth = [100000]
+depth = []
 for i in input:
     depth.append(int(i))
 
