@@ -56,4 +56,4 @@ for number in drawn:
         print(score(board) * number)
         break
 
-# part 1: 
+# part 1: 74320
