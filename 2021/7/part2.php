@@ -5,7 +5,10 @@ $lowest = 999999999999999999;
 for ($i = min($input); $i <= max($input); $i++) {
     $fuel = 0;
     for ($j = 0; $j < count($input); $j++) {
-        $fuel += abs($i - $input[$j]);
+        $steps = abs($i - $input[$j]);
+        for ($k = $steps; $k > 0; $k--) {
+            $fuel += $k;
+        }
     }
     if ($fuel < $lowest) {
         $lowest = $fuel;
@@ -14,4 +17,4 @@ for ($i = min($input); $i <= max($input); $i++) {
 
 echo $lowest;
 
-// part 1: 344735
+// part 2: 96798233
