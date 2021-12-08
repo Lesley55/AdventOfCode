@@ -15,3 +15,4 @@ for ($i = min($input); $i <= max($input); $i++) {
 echo $lowest;
 
 // part 1: 344735
+?>
