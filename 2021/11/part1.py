@@ -34,4 +34,4 @@ for s in range(steps):
 
 print(total)
 
-# part 1: 
+# part 1: 1743
