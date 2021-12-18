@@ -14,13 +14,13 @@ class Pair:
         else:
             self.right = arr[1]
     
-    def addright(self, value):
+    def add_right(self, value):
         if isinstance(self.left, Pair):
             self.left.addright(value)
         else:
             self.left += value
     
-    def addleft(self, value):
+    def add_left(self, value):
         if isinstance(self.right, Pair):
             self.right.addleft(value)
         else:
@@ -39,7 +39,7 @@ class Pair:
                 res = self.left.explode(deep + 1)
                 if res != False:
                     if isinstance(self.right, Pair):
-                        self.right.addright(res[1])
+                        self.right.add_right(res[1])
                         return [res[0], 0]
                     else:
                         self.right += res[1]
@@ -57,7 +57,7 @@ class Pair:
                 res = self.right.explode(deep + 1)
                 if res != False:
                     if isinstance(self.left, Pair):
-                        self.left.addleft(res[0])
+                        self.left.add_left(res[0])
                         return [0, res[1]]
                     else:
                         self.left += res[0]
@@ -92,24 +92,30 @@ class Pair:
         else:
             mag += 2 * self.right
         return mag
+    
+    def to_array(self):
+        pr = []
+        if isinstance(self.left, Pair):
+            pr.append(self.left.to_array())
+        else:
+            pr.append(self.left)
+        if isinstance(self.right, Pair):
+            pr.append(self.right.to_array())
+        else:
+            pr.append(self.right)
+        return pr
 
 pair = None
 
 def reduce():
     while True:
         explode = False
-        split = False
         while True:
-            if pair.explode(0) != False:
+            if pair.explode(0) == False:
                 break
             else:
                 explode = True
-        while True:
-            if not pair.split():
-                break
-            else:
-                split = True
-                break
+        split = pair.split()
         if not explode and not split:
             break
 
@@ -120,7 +126,10 @@ for i in input:
         pair = Pair(i)
     else:
         pair = Pair([pair, i])
-    # reduce()
+    print(pair.to_array())
+    reduce()
+    # pair.explode(0)
+    print(pair.to_array())
 
 print(pair.magnitude())
 
