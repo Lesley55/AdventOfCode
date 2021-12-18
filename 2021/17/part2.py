@@ -1,5 +1,4 @@
 target = [[117, 164], [-140, -89]]
-# target = [[20, 30], [-10, -5]]
 
 minx = min(target[0])
 maxx = max(target[0])
