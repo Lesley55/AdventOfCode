@@ -1,5 +1,5 @@
 target = [[117, 164], [-140, -89]]
-target = [[20, 30], [-10, -5]]
+# target = [[20, 30], [-10, -5]]
 
 minx = min(target[0])
 maxx = max(target[0])
@@ -15,13 +15,13 @@ def shoot(x, y):
             hit[(ix, iy)] = True
             return
         else:
-            x += velx
-            y += vely
             vely -= 1
             if velx < 0:
                 velx += 1
             elif velx > 0:
                 velx -= 1
+            x += velx
+            y += vely
 
 for y in range(miny, abs(miny)):
     for x in range(maxx + 1):
@@ -29,4 +29,4 @@ for y in range(miny, abs(miny)):
 
 print(len(hit))
 
-# part 2: 
+# part 2: 4110
