@@ -16,13 +16,13 @@ class Pair:
     
     def add_right(self, value):
         if isinstance(self.left, Pair):
-            self.left.addright(value)
+            self.left.add_right(value)
         else:
             self.left += value
     
     def add_left(self, value):
         if isinstance(self.right, Pair):
-            self.right.addleft(value)
+            self.right.add_left(value)
         else:
             self.right += value
 
