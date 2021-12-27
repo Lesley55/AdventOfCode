@@ -21,10 +21,10 @@ for i in range(y):
             inputimg[(i,j)] = True
 
 surrounding = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]
-for e in range(1, enhance + 1):
+for e in range(enhance):
     outputimg = {}
-    for i in range(-1 * e, y + e):
-        for j in range(-1 * e, x + e):
+    for i in range(-1 * enhance - 2, y + enhance + 2):
+        for j in range(-1 * enhance - 2, x + enhance + 2):
             bit = ""
             for s in surrounding:
                 if (i + s[0], j + s[1]) in inputimg:
@@ -35,17 +35,11 @@ for e in range(1, enhance + 1):
                 outputimg[(i,j)] = True
     inputimg = outputimg
 
-    for i in range(-1 * e, y + e):
-        p = ""
-        for j in range(-1 * e, x + e):
-            if (i,j) in outputimg:
-                p += "#"
-            else:
-                p += "."
-        print(p)
-    
-    print(len(outputimg))
-
-# print(len(inputimg))
+lit = 0
+for i in range(-1 * enhance, y + enhance):
+    for j in range(-1 * enhance, x + enhance):
+        if (i,j) in inputimg:
+            lit += 1
+print(lit)
 
 # part 1: 5204 low 5285 high
