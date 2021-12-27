@@ -2,7 +2,8 @@ inp = open("input.txt")
 
 iea = ""
 image = []
-enhance = 2
+enhance = 2 # part 1
+enhance = 50 # part 2
 
 first = True
 for i in inp:
@@ -23,8 +24,8 @@ for i in range(y):
 surrounding = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 0], [0, 1], [1, -1], [1, 0], [1, 1]]
 for e in range(enhance):
     outputimg = {}
-    for i in range(-1 * enhance - 2, y + enhance + 2):
-        for j in range(-1 * enhance - 2, x + enhance + 2):
+    for i in range(-1 * enhance - enhance, y + enhance + enhance):
+        for j in range(-1 * enhance - enhance, x + enhance + enhance):
             bit = ""
             for s in surrounding:
                 if (i + s[0], j + s[1]) in inputimg:
@@ -42,4 +43,5 @@ for i in range(-1 * enhance, y + enhance):
             lit += 1
 print(lit)
 
-# part 1: 5204 low 5285 high
+# part 1: 5268
+# part 2: 16875
