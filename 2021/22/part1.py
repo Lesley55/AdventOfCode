@@ -14,7 +14,7 @@ total = 0
 prev = []
 
 def check(i):
-    print(i)
+    # print(i)
     global total, prev
     for j in prev:
         p = {"x": [], "y": [], "z": []}
@@ -49,8 +49,8 @@ for i in cubes[::-1]:
         check(i[1:])
     else:
         prev.append(i[1:])
-        print(i)
-        print(prev)
+        # print(i)
+        # print(prev)
 
 print(total)
 
