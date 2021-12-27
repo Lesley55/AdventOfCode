@@ -16,29 +16,28 @@ prev = []
 def check(i):
     print(i)
     global total, prev
-    add = True
     for j in prev:
+        p = {"x": [], "y": [], "z": []}
         if i[0] >= j[0] and i[1] <= j[1] and i[2] >= j[2] and i[3] <= j[3] and i[4] >= j[4] and i[5] <= j[5]:
             return
         if i[0] < j[0] and i[1] >= j[0]:
-            add = False
-            check([i[0], j[0] - 1] + i[2:])
+            p["x"].append([i[0], j[0] - 1] + i[2:])
         if i[1] > j[1] and i[0] <= j[1]:
-            add = False
-            check([j[1] + 1] + i[1:])
+            p["x"].append([j[1] + 1] + i[1:])
         if i[2] < j[2] and i[3] >= j[2]:
-            add = False
-            check(i[:2] + [i[2], j[2] - 1] + i[4:])
+            p["y"].append(i[:2] + [i[2], j[2] - 1] + i[4:])
         if i[3] > j[3] and i[2] <= j[3]:
-            add = False
-            check(i[:2] + [j[3] + 1] + i[3:])
+            p["y"].append(i[:2] + [j[3] + 1] + i[3:])
         if i[4] < j[4] and i[5] >= j[4]:
-            add = False
-            check(i[:5] + [j[4] - 1])
+            p["z"].append(i[:5] + [j[4] - 1])
         if i[5] > j[5] and i[4] <= j[5]:
-            add = False
-            check(i[:4] + [j[5] + 1, i[5]])
-        if not add:
+            p["z"].append(i[:4] + [j[5] + 1, i[5]])
+        if len(p["x"]) == 0 or len(p["y"]) == 0 or len(p["z"]) == 0:
+            continue
+        else:
+            for k in p:
+                for l in p[k]:
+                    check(l)
             return
     prev.append(i)
     print(prev)
