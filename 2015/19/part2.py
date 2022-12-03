@@ -1,27 +1,40 @@
-replacements = ["Al => ThF", "Al => ThRnFAr", "B => BCa", "B => TiB", "B => TiRnFAr", "Ca => CaCa", "Ca => PB", "Ca => PRnFAr", "Ca => SiRnFYFAr", "Ca => SiRnMgAr", "Ca => SiTh", "F => CaF", "F => PMg", "F => SiAl", "H => CRnAlAr", "H => CRnFYFYFAr", "H => CRnFYMgAr", "H => CRnMgYFAr", "H => HCa", "H => NRnFYFAr", "H => NRnMgAr", "H => NTh", "H => OB", "H => ORnFAr", "Mg => BF", "Mg => TiMg", "N => CRnFAr", "N => HSi", "O => CRnFYFAr", "O => CRnMgAr", "O => HP", "O => NRnFAr", "O => OTi", "P => CaP", "P => PTi", "P => SiRnFAr", "Si => CaSi", "Th => ThCa", "Ti => BP", "Ti => TiTi", "e => HF", "e => NAl", "e => OMg"]
-input = "ORnPBPMgArCaCaCaSiThCaCaSiThCaCaPBSiRnFArRnFArCaCaSiThCaCaSiThCaCaCaCaCaCaSiRnFYFArSiRnMgArCaSiRnPTiTiBFYPBFArSiRnCaSiRnTiRnFArSiAlArPTiBPTiRnCaSiAlArCaPTiTiBPMgYFArPTiRnFArSiRnCaCaFArRnCaFArCaSiRnSiRnMgArFYCaSiRnMgArCaCaSiThPRnFArPBCaSiRnMgArCaCaSiThCaSiRnTiMgArFArSiThSiThCaCaSiRnMgArCaCaSiRnFArTiBPTiRnCaSiAlArCaPTiRnFArPBPBCaCaSiThCaPBSiThPRnFArSiThCaSiThCaSiThCaPTiBSiRnFYFArCaCaPRnFArPBCaCaPBSiRnTiRnFArCaPRnFArSiRnCaCaCaSiThCaRnCaFArYCaSiRnFArBCaCaCaSiThFArPBFArCaSiRnFArRnCaCaCaFArSiRnFArTiRnPMgArF"
+input = open("input.txt")
 
-# replacements = ["e => H", "e => O", "H => HO", "H => OH", "O => HH"]
-# input = "HOH"
+replacements = []
+for i in input:
+    i = i.strip()
+    i = i.split(" => ")
+    replacements.append(i)
+input = replacements[-1][0]
+replacements = replacements[:-2]
 
+# hacky sort on length of second item, then on length first item assuming first item isnt longer then 9
+def customsort(n):
+    return int(str(len(n[1])) + str(len(n[0])))
+replacements.sort(key=customsort, reverse=True)
+
+# going backwards: reducing input by as much length as possible each step, to get to one letter asap
 distinct = set()
-distinct.add("e")
-
-loops = 1
-go = True
-while go:
+distinct.add(input)
+steps = 0
+w = True
+while w:
+    steps += 1
     dis = set()
-    for b in distinct:
+    for d in distinct:
+        longestfoundreplacement = 0
         for i in replacements:
-            r = i.split(" ")
-            for j in range(len(b)):
-                if b[j:j+len(r[0])] == r[0]:
-                    new = b[0:j] + r[2] + b[j+len(r[0]):len(b)]
-                    if new == input:
-                        print(loops)
-                        go = False
-                    elif not len(new) > len(input):
-                        dis.add(new)
+            if len(i) < longestfoundreplacement:
+                break
+            longestfoundreplacement = len(i)
+            for j in range(len(d)):
+                if d[j:j+len(i[1])] == i[1]:
+                    new = d[:j] + i[0] + d[j+len(i[1]):]
+                    if new == "e":
+                        w = False
+                    dis.add(new)
+                    # break
     distinct = dis
 
-# part 2: bruteforcing all possible ways will take WAY to long
+print(steps)
+# should skip a lot compaired to prev code, based on questionable assumptions, but will probably still take way to long
