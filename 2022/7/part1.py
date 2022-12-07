@@ -38,6 +38,5 @@ def countdir(d):
 below = 0
 total = countdir(dir)
 
-# print(total)
 print(below)
-# part 1: 
+# part 1: 1315285
