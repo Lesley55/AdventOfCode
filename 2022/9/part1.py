@@ -18,4 +18,4 @@ for i in input:
         distinct.add(t)
 
 print(len(distinct))
-# part 1: 
+# part 1: 5902
