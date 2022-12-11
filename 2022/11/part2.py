@@ -21,7 +21,6 @@ for i in input:
 insp = []
 rounds = 10000
 for i in range(rounds):
-    print(i)
     for monkey in monkeys:
         for j in range(len(monkey["items"])):
             item = monkey["items"].pop(0)
@@ -44,21 +43,14 @@ for i in range(rounds):
             # test and throw
             if item % monkey["test"] == 0:
                 monkeys[monkey["t"]]["items"].append(item)
+                insp.append(str(monkeys.index(monkey)) + str(monkey["t"]))
             else:
                 monkeys[monkey["f"]]["items"].append(item)
+                insp.append(str(monkeys.index(monkey)) + str(monkey["f"]))
+    # check if monkeys repeat throwing to same monkey
+    if insp[:len(insp)//2] == insp[len(insp)//2:]:
+        print(len(insp))
 
-    # trying to find reoccurring pattern
-    inspected = []
-    for j in monkeys:
-        inspected.append(j["inspected"])
-    for round in range(len(insp)):
-        all = True
-        for j in range(len(insp[round])):
-            if not inspected[j] % insp[round][j] == 0:
-                all = False
-        if all:
-            print(round, insp[round], i, inspected)
-    insp.append(inspected)
 
 inspected = []
 for i in monkeys:
