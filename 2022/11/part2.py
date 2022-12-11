@@ -18,7 +18,6 @@ for i in input:
     elif i[1] == "false:":
         monkeys[-1]["f"] = int(i[5])
 
-insp = []
 rounds = 10000
 for i in range(rounds):
     for monkey in monkeys:
@@ -43,14 +42,8 @@ for i in range(rounds):
             # test and throw
             if item % monkey["test"] == 0:
                 monkeys[monkey["t"]]["items"].append(item)
-                insp.append(str(monkeys.index(monkey)) + str(monkey["t"]))
             else:
                 monkeys[monkey["f"]]["items"].append(item)
-                insp.append(str(monkeys.index(monkey)) + str(monkey["f"]))
-    # check if monkeys repeat throwing to same monkey
-    if insp[:len(insp)//2] == insp[len(insp)//2:]:
-        print(len(insp))
-
 
 inspected = []
 for i in monkeys:
