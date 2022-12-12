@@ -26,4 +26,4 @@ for row in range(len(trees)):
             max = score
 
 print(max)
-# part 2: 
+# part 2: 199272
