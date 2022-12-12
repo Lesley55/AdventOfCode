@@ -18,6 +18,10 @@ for i in input:
     elif i[1] == "false:":
         monkeys[-1]["f"] = int(i[5])
 
+number = 1
+for i in monkeys:
+    number *= i["test"]
+
 rounds = 10000
 for i in range(rounds):
     for monkey in monkeys:
@@ -38,6 +42,7 @@ for i in range(rounds):
                 item = a + b
             elif monkey["op"][1] == "*":
                 item = a * b
+                item = item % number
             monkey["inspected"] += 1
             # test and throw
             if item % monkey["test"] == 0:
@@ -51,4 +56,4 @@ for i in monkeys:
 inspected.sort()
 
 print(inspected[-1] * inspected[-2])
-# part 2: 
+# part 2: 13119526120
