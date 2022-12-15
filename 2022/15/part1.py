@@ -11,19 +11,19 @@ for i in input:
 
 row = 2000000
 
+b = 0
+for beacon in beacons:
+    if beacon[1] == row:
+        b += 1
+
 no = set()
 for i in sensors:
     dist = abs(i[2] - i[0]) + abs(i[3] - i[1])
-    for x in range(dist):
-        for y in range(dist - x + 1):
-            if i[1] + y == row and not (i[0] + x, i[1] + y) in beacons:
-                no.add(i[0] + x)
-            if i[1] - y == row and not (i[0] + x, i[1] - y) in beacons:
-                no.add(i[0] + x)
-            if i[1] + y == row and not (i[0] - x, i[1] + y) in beacons:
-                no.add(i[0] - x)
-            if i[1] - y == row and not (i[0] - x, i[1] - y) in beacons:
-                no.add(i[0] - x)
+    x = dist - (row - i[1])
+    for j in range(-x, x + 1):
+        d = abs(i[0] + j - i[0]) + abs(row - i[1])
+        if d <= dist:
+            no.add(i[0] + j)
 
-print(len(no))
-# part 1: 
+print(len(no) - b)
+# part 1: 5564017
