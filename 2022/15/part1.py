@@ -1,19 +1,14 @@
 input = open("input.txt")
 
 sensors = []
-beacons = {}
+b = 0
+row = 2000000
 for i in input:
     i = i.strip()
     i = i.replace("=", " ").replace(",", " ").replace(":", " ")
     i = i.split()
     sensors.append([int(i[3]), int(i[5]), int(i[11]), int(i[13])])
-    beacons[(int(i[11]), int(i[13]))] = True
-
-row = 2000000
-
-b = 0
-for beacon in beacons:
-    if beacon[1] == row:
+    if int(i[13]) == row:
         b += 1
 
 no = set()
