@@ -9,7 +9,7 @@ for i in input:
     cubes.append(i)
 
 surface = 0
-sides = [[0,0,1], [0,0,-1], [0,1,0], [0,-1,0], [1,0,0], [-1,0,0], ]
+sides = [[0,0,1], [0,0,-1], [0,1,0], [0,-1,0], [1,0,0], [-1,0,0]]
 for i in cubes:
     for j in sides:
         neighbor = [i[0] + j[0], i[1] + j[1], i[2] + j[2]]
