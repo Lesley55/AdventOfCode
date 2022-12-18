@@ -43,7 +43,6 @@ for r in range(len(rock)):
     rock[r] = (rock[r][0] + 3, rock[r][1] + 2)
 
 target = 1000000000000
-# target = 2022
 i = 0
 jeti = 0
 
@@ -67,8 +66,8 @@ def find_pattern():
                     break
             if same and len(chamber) - p in landed_rocks:
                 fallen = landed_rocks[len(chamber)] - landed_rocks[len(chamber) - p]
-                units = int(target / fallen) * p
-                target = target % fallen
+                units = int((target - i) / fallen) * p
+                target = i + ((target - i) % fallen)
                 return
 
 def landed():
@@ -129,4 +128,4 @@ while i < target:
 
 remove_empty()
 print(units + len(chamber))
-# part 2: 
+# part 2: 1539823008825
