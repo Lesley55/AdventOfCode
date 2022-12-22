@@ -11,7 +11,10 @@ for i in input:
     else:
         inp[i[0]] = i[1]
 
-def equal(monkey):
+value = []
+def equal(humn):
+    monkey = copy.copy(inp)
+    monkey["humn"] = humn / 1
     while not type(monkey["root"]) == float:
         for m in monkey:
             if not type(monkey[m]) == float:
@@ -20,22 +23,24 @@ def equal(monkey):
                     b = str(monkey[a[0]]) + a[1] + str(monkey[a[2]])
                     monkey[m] = eval(b)
     root = inp["root"].split()
-    # print(monkey[root[0]], monkey[root[2]])
+    value.append(monkey[a[0]])
     return monkey[root[0]] == monkey[root[2]]
-
-humn = 3952673930000
-while True:
-    monkey = copy.copy(inp)
-    monkey["humn"] = humn / 1
-    if equal(monkey):
-        break
-    humn += 1
 
 # printing root, the second value is always constant: 13439547545467
 # and the first value is slowly decreasing when humn gets higher
-# so i just put a random higher starting value for humn
-# until i got close enough that running the code doesnt take ages
-# would have preferred to code a solution, but at least i got the answer
+# with almost a linear difference between values arround -7:1
+# using this to get closer fast
+humn = 0
+for i in range(5):
+    equal(humn)
+    equal(humn + 1)
+    diff = value[-1] - value[-2]
+    humn += int((value[-1] - 13439547545467) / abs(diff))
+
+while True:
+    if equal(humn):
+        break
+    humn += 1
 
 print(humn)
 # part 2: 3952673930912
