@@ -7,7 +7,6 @@ for i in input:
     for j in i:
         if j.isdigit():
             d += j
-    print(d[0]+d[-1])
     total += int(d[0]+d[-1])
 
 print(total)
