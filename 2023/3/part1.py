@@ -25,4 +25,4 @@ for i in range(len(engine)):
 
 print(total)
 
-# part 1: 599832 high 529618
+# part 1: 529618
