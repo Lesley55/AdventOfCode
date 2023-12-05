@@ -8,7 +8,6 @@ for i in range(len(input)):
         new_seeds = [i for i in seeds]
         for j in input[i+1:]:
             if j == "\n":
-                seeds = new_seeds
                 break
             k = j.split()
             for s in range(len(seeds)):
