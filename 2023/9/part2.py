@@ -11,11 +11,10 @@ for i in range(len(input)):
             diff.append(pyramid[-1][j] - pyramid[-1][j-1])
         pyramid.append(diff)
     history = 0
-    for p in pyramid:
-        history += p[-1]
-        print(p[-1])
+    for p in pyramid[::-1]:
+        history = p[0] - history
     total += history
 
 print(total)
 
-# part 2: 
+# part 2: 1108
