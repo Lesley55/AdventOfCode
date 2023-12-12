@@ -13,8 +13,9 @@ for i in range(len(input)):
     history = 0
     for p in pyramid:
         history += p[-1]
+        print(p[-1])
     total += history
 
 print(total)
 
-# part 1: 1877825184
+# part 2: 
