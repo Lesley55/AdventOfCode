@@ -40,6 +40,25 @@ while not middle:
             middle = True
             break
 
+def is_loop(i, j):
+    if i % 1 == 0 and j % 1 == 0:
+        if [i, j] in prev:
+            return True
+        else:
+            return False
+    connects = 0
+    for n in [[-0.5, 0], [0.5, 0], [0, -0.5], [0, 0.5]]:
+        if [i + n[0], j + n[1]] in prev:
+            for o in options[input[int(i + n[0])][int(j + n[1])]]:
+                if [i, j] == [i + n[0] + (o[0] / 2), j + n[1] + (o[1] / 2)]:
+                    connects += 1
+    if connects == 0:
+        return False
+    return True
+
+for i in range(len(prev)):
+    prev[i] = [float(prev[i][0]), float(prev[i][1])]
+
 outside = []
 inside = []
 for i in range(len(input)):
@@ -49,7 +68,7 @@ for i in range(len(input)):
         while True:
             more = False
             for k in adj:
-                if not (k in outside or k in inside):
+                if not (k in outside or k in inside or k in prev):
                     for l in [[-0.5, 0], [0.5, 0], [0, -0.5], [0, 0.5]]:
                         m = [k[0]+l[0], k[1]+l[1]]
                         if m[0] < 0 or len(input) <= m[0] or m[1] < 0 or len(input[i]) <= m[1] or m in outside:
@@ -58,26 +77,13 @@ for i in range(len(input)):
                         elif m in inside:
                             inside += adj
                             break
-                        elif not m in prev:
-                            # bug is probably here, gl debugging future self, time for sleep #############
-                            connects = 0
-                            for n in [[-0.5, 0], [0.5, 0], [0, -0.5], [0, 0.5]]:
-                                if m[0] + n[0] % 1 == 0 and m[1] + n[1] % 1 == 0:
-                                    if [int(m[0] + n[0]), int(m[1] + n[1])] in prev:
-                                        for o in options[input[int(m[0] + n[0])][int(m[1] + n[1])]]:
-                                            p = [m[0] + n[0] + (o[0] / 2), m[1] + n[1] + (o[1] / 2)]
-                                            if p[0] % 1 != 0:
-                                                p = [int(p[0]), p[1]]
-                                            if p[1] % 1 != 0:
-                                                p = [p[0], int(p[1])]
-                                            if p == m:
-                                                connects += 1
-                            ###############################################################################
-                            if not 1 < connects:
-                                adj.append(m)
-                                more = True
+                        elif not is_loop(m[0], m[1]) and not m in adj:
+                            adj.append(m)
+                            more = True
                     else:
                         continue
+                    break
+                else:
                     break
             else:
                 if not more:
@@ -86,7 +92,11 @@ for i in range(len(input)):
                 continue
             break
 
-print(len(outside), outside)
-print(len(inside), inside)
+total = 0
+for i in inside:
+    if i[0] % 1 == 0 and i[1] % 1 == 0:
+        total += 1
 
-# part 2: 
+print(total)
+
+# part 2: 395
