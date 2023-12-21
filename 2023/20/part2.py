@@ -18,22 +18,32 @@ for i in modules:
         if i != j and modules[i][0] == "&" and i in modules[j][2]:
             modules[i][3][j] = False
 
+required = []
+for m in modules:
+    if "lg" in modules[m][2]:
+        required.append(m)
+
+diff = {}
+for i in required:
+    diff[i] = []
+
 pressed = 0
 found = False
 while not found:
+    found = True
+    for i in diff:
+        # keeping track of only 1 would have been enough, doesnt change and is same distance from step 0
+        if len(diff[i]) < 2:
+            found = False
     pressed += 1
     signals = [[b, False] for b in broadcaster]
     while 0 < len(signals):
         new = []
         for signal in signals:
+            if signal[0] == "lg" and signal[1] and signal[2] in required:
+                diff[signal[2]].append(pressed)
             if not signal[0] in modules:
-                if signal[0] == "rx" and not signal[1]:
-                    print(pressed)
-                    found = True
-                    new = []
-                    break
-                else:
-                    continue
+                continue
             module = modules[signal[0]]
             if module[0] == "%":
                 if not signal[1]:
@@ -52,5 +62,21 @@ while not found:
                 for m in module[2]:
                     new.append([m, not all_high, signal[0]])
         signals = new
+
+a = []
+for d in diff.values():
+    a += d
+pressed = max(a) # could have just started from 0 since it makes no difference in this case
+diff = [diff[i][1] - diff[i][0] for i in diff]
+diff.sort()
+all_true = False
+while not all_true:
+    pressed += diff[-1]
+    all_true = True
+    for d in diff:
+        if pressed % d != 0:
+            all_true = False
+            break
+print(pressed)
 
 # part 2: 
