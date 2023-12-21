@@ -12,11 +12,11 @@ for i in range(len(input)):
             pos.append([i, j])
 
 even = 1
-# odd = 0
+odd = 0
 directions = [[0, 1], [1, 0], [0, -1], [-1, 0]]
 steps = 0
 prev = []
-while steps < 5000:
+while steps < 26501365:
     steps += 1
     new = []
     for p in pos:
@@ -26,14 +26,14 @@ while steps < 5000:
                 new.append(np)
                 if steps % 2 == 0:
                     even += 1
-                # else:
-                #     odd += 1
+                else:
+                    odd += 1
     prev = pos
     pos = new
 
 if steps % 2 == 0:
     print(even)
-# else:
-#     print(odd)
+else:
+    print(odd)
 
 # part 2: 
