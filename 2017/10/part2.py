@@ -1,9 +1,5 @@
 input = open("input.txt")
 input = input.readline()
-# input = ''
-# input = 'AoC 2017'
-# input = '1,2,3'
-# input = '1,2,4'
 
 a = []
 for i in input:
@@ -37,10 +33,11 @@ while len(hashlist) > 1:
 
 hash = ""
 for i in l:
-    hash += hex(i)[2:]
+    h = hex(i)[2:]
+    if len(h) == 1:
+        h = "0" + h
+    hash += h
 
 print(hash)
 
-# part 2: 35b028fe2c958793f7d5a61d7a08c8 wrong
-
-# all the examples give the correct answer, not sure why it doesn't work for my input
+# part 2: 35b028fe2c958793f7d5a61d07a008c8
