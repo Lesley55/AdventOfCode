@@ -1,31 +1,17 @@
 input = 380
-input = 3
+bufferLen = 1
+pos = 0
+lastAfterZero = 0
 
-buffer = [0]
+for i in range(1, 50000001):
+    pos += input
+    if pos >= bufferLen:
+        pos = pos % bufferLen
+    pos += 1
+    if pos == 1:
+        lastAfterZero = i
+    bufferLen += 1
 
-p = 0
-# for i in range(1, 50000001):
-for i in range(1, 10):
-    pos = buffer.index(i-1)
-    stepstotake = input + 1
-    toEnd = len(buffer) - pos
-    if stepstotake > toEnd:
-        pos = 0
-        stepstotake -= toEnd
-    if stepstotake > len(buffer):
-        stepstotake = stepstotake % len(buffer)
-    pos += stepstotake
+print(lastAfterZero)
 
-    if pos == 0:
-        buffer.append(i)
-    else:
-        buffer.insert(pos, i)
-    # if buffer[pos-1] == 0:
-    #     # print(pos-p)
-    #     print(i)
-
-    print(buffer)
-
-print(buffer[buffer.index(0) + 1])
-
-# part 2: 
+# part 2: 28954211
