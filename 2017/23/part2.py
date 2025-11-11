@@ -14,9 +14,18 @@ def getValue(a):
 
 jump = 0
 invoked = 0
-while True:
+# while True:
+for i in range(50):
+    if registers["d"] >= 2 and registers["e"] == 2 and jump == 11:
+        # print(jump, instructions[jump], "e")
+        registers["e"] += 107898
+        registers["g"] = 0
+        jump = 19
+    elif registers["d"] == 2 and registers["e"] == 107900 and jump == 20:
+        # print(jump, instructions[jump], "d")
+        registers["d"] += 107897
+        jump = 30 # :(
     if jump < 0 or jump >= len(instructions):
-        print("terminated")
         break
     if instructions[jump][0] == "set":
         registers[instructions[jump][1]] = getValue(instructions[jump][2])
@@ -27,9 +36,10 @@ while True:
         registers[instructions[jump][1]] *= getValue(instructions[jump][2])
     elif instructions[jump][0] == "jnz":
         if getValue(instructions[jump][1]) != 0:
+            print(jump, instructions[jump], registers)
             jump += getValue(instructions[jump][2])
             continue
-        # print(registers)
+    print(jump, instructions[jump], registers)
     jump += 1
 
 print(registers["h"])
