@@ -26,32 +26,22 @@ sizes.sort(key=lambda x: x[0], reverse=True)
 ylines.sort(key=lambda i: i[0][0])
 xlines.sort(key=lambda i: i[0][1])
 
-area = {}
+squares = []
 for i in range(len(ylines)):
    for j in range(i+1, len(ylines)):
       a = max([ylines[i][0][1], ylines[j][0][1]])
       b = min([ylines[i][1][1], ylines[j][1][1]])
       if a <= b:
-         for k in range(a, b+1):
-            for l in range(ylines[i][0][0], ylines[j][0][0]+1):
-               area[(k, l)] = True
+         squares.append([a, b, ylines[i][0][0], ylines[j][0][0]])
 for i in range(len(xlines)):
    for j in range(i+1, len(xlines)):
       a = max([xlines[i][0][0], xlines[j][0][0]])
       b = min([xlines[i][1][0], xlines[j][1][0]])
       if a <= b:
-         for k in range(xlines[i][0][1], xlines[j][0][1]+1):
-            for l in range(a, b+1):
-               area[(k, l)] = True
+         squares.append([xlines[i][0][1], xlines[j][0][1], a, b])
 
-# for i in range(10):
-#    line = ""
-#    for j in range(15):
-#       if (i, j) in area:
-#          line += "#"
-#       else:
-#          line += "."
-#    print(line)
+print(sizes[0][0])
+print(len(squares))
 
 for size in sizes:
    inside = True
@@ -59,7 +49,10 @@ for size in sizes:
    for i in range(min(a), max(a) + 1):
       b = [tiles[size[1]][1], tiles[size[2]][1]]
       for j in range(min(b), max(b) + 1):
-         if not (j, i) in area:
+         for square in squares:
+            if j >= square[0] and j <= square[1] and i >= square[2] and i <= square[3]:
+               break
+         else:
             inside = False
             break
       if not inside:
