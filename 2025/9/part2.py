@@ -40,25 +40,47 @@ for i in range(len(xlines)):
       if a <= b:
          squares.append([xlines[i][0][1], xlines[j][0][1], a, b])
 
-print(sizes[0][0])
-print(len(squares))
+# visual representation
+for i in range(0, 100000, 2000):
+   row = ""
+   for j in range(0, 100000, 2000):
+      for square in squares:
+         if j >= square[0] and j <= square[1] and i >= square[2] and i <= square[3]:
+            row += "#"
+            break
+      else:
+         row += "."
+   print(row)
+
+# seems to be eclipse, dont know the exact size, but maybe use math to get biggest rectangle in eclipse to get closer to the answer
+o = [x[0] for x in tiles]
+p = [x[1] for x in tiles]
+e1 = max(o) - min(o)
+e2 = max(p) - min(p)
+print(int(2* (e1/2) * (e2/2))) # 4652758465
+# possible size should probably be smaller than this max area
 
 for size in sizes:
+   print(size)
    inside = True
    a = [tiles[size[1]][0], tiles[size[2]][0]]
    for i in range(min(a), max(a) + 1):
       b = [tiles[size[1]][1], tiles[size[2]][1]]
-      for j in range(min(b), max(b) + 1):
+      j = min(b)
+      # for j in range(min(b), max(b) + 1):
+      while j <= max(b):
          for square in squares:
             if j >= square[0] and j <= square[1] and i >= square[2] and i <= square[3]:
+               j = square[1]
                break
          else:
             inside = False
             break
+         j += 1
       if not inside:
          break
    if inside:
       print(size[0])
       break
 
-# part 2: 
+# part 2: 4638024000 too high
