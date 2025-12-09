@@ -69,11 +69,12 @@ for size in sizes:
    b = tiles[size[2]]
    c = [a[0], b[1]]
    d = [b[0], a[1]]
-   if inside(a[0], b[1], area) and inside(b[0], a[1], area) and inside(c[0], d[1], area) and inside(d[0], c[1], area):
+   if inside(a[0], a[1], area) and inside(b[0], b[1], area) and inside(c[0], c[1], area) and inside(d[0], d[1], area):
       print(size[0])
       break
 
 # part 2: 4638024000 too high
 # part 2: 4638024000 again
 # part 2: 4518479420 too high
+# part 2: 4638024000 again
 # part 2: 4638024000 again
