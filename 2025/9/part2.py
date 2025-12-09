@@ -40,76 +40,40 @@ for i in range(len(xlines)):
       if a <= b:
          squares.append([xlines[i][0][1], xlines[j][0][1], a, b])
 
-# # visual representation
-# for i in range(0, 100000, 2000):
-#    row = ""
-#    for j in range(0, 100000, 2000):
-#       for square in squares:
-#          if j >= square[0] and j <= square[1] and i >= square[2] and i <= square[3]:
-#             row += "#"
-#             break
-#       else:
-#          row += "."
-#    print(row)
+area = {}
+for square in squares:
+   for i in range(square[0], square[1] + 1):
+      area[(i, square[2])] = True
+      area[(i, square[3])] = True
+   for i in range(square[2], square[3] + 1):
+      area[(square[0], i)] = True
+      area[(square[1], i)] = True
 
-# # seems to be eclipse, dont know the exact size, but maybe use math to get biggest rectangle in eclipse to get closer to the answer
-# o = [x[0] for x in tiles]
-# p = [x[1] for x in tiles]
-# e1 = max(o) - min(o)
-# e2 = max(p) - min(p)
-# print(int(2* (e1/2) * (e2/2))) # 4652758465
-# # possible size should probably be smaller than this max area
+def inside(x, y, polygon):
+   # assuming no holes because kind of eclipse
+   left = False
+   right = False
+   for i in range(x + 1):
+      if (y, x) in polygon:
+         left = True
+         break
+   for i in range(x, 100000):
+      if (y, x) in polygon:
+         right = True
+         break
+   return left and right
 
 for size in sizes:
-   print(size)
-   inside = True
-
-#    a = [tiles[size[1]][0], tiles[size[2]][0]]
-#    for i in range(min(a), max(a) + 1):
-#       b = [tiles[size[1]][1], tiles[size[2]][1]]
-#       j = min(b)
-#       # for j in range(min(b), max(b) + 1):
-#       while j <= max(b):
-#          for square in squares:
-#             if j >= square[0] and j <= square[1] and i >= square[2] and i <= square[3]:
-#                j = square[1]
-#                break
-#          else:
-#             inside = False
-#             break
-#          j += 1
-#       if not inside:
-#          break
-#    if inside:
-#       print(size[0])
-#       break
-
-# # part 2: 4638024000 too high
-
-   # since it appears to be an eclipse, im going to pretend that there can be no holes or gaps in the area
-   # only check corners
+   # corners
    a = tiles[size[1]]
    b = tiles[size[2]]
    c = [a[0], b[1]]
    d = [b[0], a[1]]
-   for s in squares:
-      if not a == True:
-         if a[1] >= s[0] and a[1] <= s[1] and a[0] >= s[2] and a[0] <= s[3]:
-            a = True
-      if not b == True:
-         if b[1] >= s[0] and b[1] <= s[1] and b[0] >= s[2] and b[0] <= s[3]:
-            b = True
-      if not c == True:
-         if c[1] >= s[0] and c[1] <= s[1] and c[0] >= s[2] and c[0] <= s[3]:
-            c = True
-      if not d == True:
-         if d[1] >= s[0] and d[1] <= s[1] and d[0] >= s[2] and d[0] <= s[3]:
-            d = True
-      if a == True and b == True and c == True and d == True:
-         break
-   if a == True and b == True and c == True and d == True:
+   if inside(a[0], b[1], area) and inside(b[0], a[1], area) and inside(c[0], d[1], area) and inside(d[0], c[1], area):
       print(size[0])
       break
 
-# part 2: 4638024000 same answer
+# part 2: 4638024000 too high
+# part 2: 4638024000 again
 # part 2: 4518479420 too high
+# part 2: 4638024000 again
